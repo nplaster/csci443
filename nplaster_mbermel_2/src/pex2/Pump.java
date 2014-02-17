@@ -85,4 +85,8 @@ public class Pump extends Thread{
 			requestPower();
 		}
 	}
+
+	public int getID() {
+		return id;
+	}
 }
