@@ -75,6 +75,10 @@ public class Pump extends Thread{
 	public int getVolume() {
 		return volume;
 	}
+	
+	public int getID() {
+		return id;
+	}
 
 	public void setStatus(Status status) {
 		this.status = status;
@@ -86,7 +90,4 @@ public class Pump extends Thread{
 		}
 	}
 
-	public int getID() {
-		return id;
-	}
 }
