@@ -1,3 +1,3 @@
 package pex2;
 
-public enum Status { READY, WAITING, PUMPING }
+public enum Status { READY, WAITING, PUMPING, CLEANING }

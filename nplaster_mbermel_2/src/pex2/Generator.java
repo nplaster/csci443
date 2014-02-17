@@ -3,6 +3,10 @@ package pex2;
 public class Generator {
 	private boolean generating;
 	
+	public Generator() {
+		generating = false;
+	}
+
 	public synchronized boolean generating(){
 		return generating;
 	}

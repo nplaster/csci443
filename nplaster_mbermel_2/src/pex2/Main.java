@@ -37,13 +37,13 @@ public class Main
   private JFrame frame;
   private JPanel panel;
   
-  private List<Thread> pumpNames;
+  private List<Pump> pumpNames;
   private List<Generator> generators;
 
   public Main()
   {
     // **** Create pumping station components here. ****
-	pumpNames = new ArrayList<Thread>();
+	pumpNames = new ArrayList<Pump>();
 	generators = new ArrayList<Generator>();
 	for(int i = N; i > 0; i--){
 		generators.add(new Generator());
@@ -89,13 +89,13 @@ public class Main
     long startTime = System.nanoTime();
 
 	for(int i = N; i > 0; i--){
-		pumpNames.get(i).start();
+		pumpNames.get(i-1).start();
 	}
     // Run until the tank is full, re-painting the GUI frequently.
-    //while( true )
-    //{
-    //  panel.repaint();
-    //}
+    while(pumpNames.get(0).getVolume() <= CAPACITY)
+    {
+      panel.repaint();
+    }
 
     long stopTime = System.nanoTime();
 
@@ -197,12 +197,44 @@ public class Main
         g2.setColor( Color.BLACK );
         g2.draw( pipe );
         g2.setStroke( stroke6 );
-        g2.setColor( pumpColors[ (int)(Math.random() * pumpColors.length) ] );  // **** Set color based on the pumps/power supplies! ****
+        switch(pumpNames.get(i).getStatus()){
+        	case CLEANING:
+        		g2.setColor( pumpColors[3] );
+        		break;
+        	case PUMPING:
+        		g2.setColor( pumpColors[2] );
+        		break;
+        	case WAITING:
+        		g2.setColor( pumpColors[1] );
+        		break;
+        	case READY:
+        		g2.setColor( pumpColors[0] );
+        		break;
+        	default:
+        		g2.setColor( pumpColors[0] );
+        		break;
+        }
         g2.draw( pipe );
 
         // The actual pump, drawn last so it will cover the ends of the
         // power cords and the pipe.
-        g2.setColor( pumpColors[ (int)(Math.random() * pumpColors.length) ] );  // **** Set color based on the pumps/power supplies! ****
+        switch(pumpNames.get(i).getStatus()){
+    	case CLEANING:
+    		g2.setColor( pumpColors[3] );
+    		break;
+    	case PUMPING:
+    		g2.setColor( pumpColors[2] );
+    		break;
+    	case WAITING:
+    		g2.setColor( pumpColors[1] );
+    		break;
+    	case READY:
+    		g2.setColor( pumpColors[0] );
+    		break;
+    	default:
+    		g2.setColor( pumpColors[0] );
+    		break;
+    }  // **** Set color based on the pumps/power supplies! ****
         g2.fillOval( -pumpSize/2, -PANEL_SIZE/2, pumpSize, pumpSize );
         // Outline the pump so it looks pretty.
         g2.setStroke( stroke2 );
@@ -241,7 +273,7 @@ public class Main
       // Note the last parameter to fillRect is based on the current level of the tank.
       g2.setColor( Color.WHITE );
       // **** Replace the 20000 in the line below with the current level of the water tank! ****
-      g2.fillRect( -tankWidth/2, -tankHeight/2, tankWidth, tankHeight - tankHeight * 20000 / CAPACITY );
+      g2.fillRect( -tankWidth/2, -tankHeight/2, tankWidth, tankHeight - tankHeight * pumpNames.get(0).getVolume() / CAPACITY );
       // Outline the tank so it looks pretty.
       g2.setColor( Color.BLACK );
       g2.setStroke( stroke4 );
