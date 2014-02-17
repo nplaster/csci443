@@ -8,7 +8,7 @@ public class Pump extends Thread{
 	private int id;
 	private Status status;
 	
-	public Pump(int id, Generator rightGenerator, Generator leftGenerator) {
+	public Pump(int id, Generator leftGenerator, Generator rightGenerator) {
 		super();
 		this.rightGenerator = rightGenerator;
 		this.leftGenerator = leftGenerator;

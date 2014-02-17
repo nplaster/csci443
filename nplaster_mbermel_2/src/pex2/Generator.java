@@ -3,7 +3,7 @@ package pex2;
 public class Generator {
 	private boolean generating;
 	
-	public boolean generating(){
+	public synchronized boolean generating(){
 		return generating;
 	}
 	
@@ -11,8 +11,9 @@ public class Generator {
 		generating = true;
 	}
 
-	public void stopGenerator(){
+	public synchronized void stopGenerator(){
 		generating = false;
 		this.notify();
 	}
+
 }

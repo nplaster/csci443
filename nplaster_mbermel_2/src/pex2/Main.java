@@ -11,6 +11,8 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.geom.Line2D;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -34,11 +36,27 @@ public class Main
   // GUI components.
   private JFrame frame;
   private JPanel panel;
+  
+  private List<Thread> pumpNames;
+  private List<Generator> generators;
 
   public Main()
   {
     // **** Create pumping station components here. ****
-
+	pumpNames = new ArrayList<Thread>();
+	generators = new ArrayList<Generator>();
+	for(int i = N; i > 0; i--){
+		generators.add(new Generator());
+	}
+	for(int i = N; i > 0; i--){
+		if(i == N){
+			pumpNames.add(new Pump(i,generators.get(i-1), generators.get(0)));
+		}
+		else{
+			pumpNames.add(new Pump(i,generators.get(i-1), generators.get(i)));
+		}
+	}
+	
 
 
 
@@ -70,6 +88,9 @@ public class Main
   {
     long startTime = System.nanoTime();
 
+	for(int i = N; i > 0; i--){
+		pumpNames.get(i).start();
+	}
     // Run until the tank is full, re-painting the GUI frequently.
     //while( true )
     //{
