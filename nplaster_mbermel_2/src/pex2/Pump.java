@@ -24,12 +24,15 @@ public class Pump extends Thread{
 	public void requestPower(){
 		setStatus(Status.READY);
 		synchronized(leftGenerator){
-			while(leftGenerator.generating() || rightGenerator.generating()){
+			while(leftGenerator.generating() || rightGenerator.generating())
 				try {
 					setStatus(Status.WAITING);
 					leftGenerator.wait();
 				} catch (InterruptedException e) {
 					e.printStackTrace();
+				}
+				synchronized(rightGenerator){
+				try{
 					leftGenerator.startGenerator();
 					rightGenerator.startGenerator();
 					pumpWater();
@@ -39,7 +42,8 @@ public class Pump extends Thread{
 					rightGenerator.stopGenerator();
 					pumpCleaning();
 				}
-			}
+				}
+			
 		}
 		
 	}
@@ -78,8 +82,8 @@ public class Pump extends Thread{
 	}
 	
 	public void run(){
-		//while(true){
+		while(volume < 60000){
 			requestPower();
-		//}
+		}
 	}
 }
