@@ -22,17 +22,17 @@ public class Pump extends Thread{
 	}
 
 	public void requestPower(){
-		setStatus(Status.READY);
+		setStatus(Status.WAITING);
 		synchronized(leftGenerator){
 			while(leftGenerator.generating() || rightGenerator.generating())
 				try {
-					setStatus(Status.WAITING);
 					leftGenerator.wait();
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 				synchronized(rightGenerator){
 				try{
+					setStatus(Status.READY);
 					leftGenerator.startGenerator();
 					rightGenerator.startGenerator();
 					pumpWater();
