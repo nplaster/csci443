@@ -40,12 +40,11 @@ public class Pump extends Thread{
 				finally{
 					leftGenerator.stopGenerator();
 					rightGenerator.stopGenerator();
-					pumpCleaning();
 				}
 				}
 			
 		}
-		
+		pumpCleaning();
 	}
 	
 	
