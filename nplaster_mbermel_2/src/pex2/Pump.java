@@ -15,6 +15,27 @@ public class Pump extends Thread{
 		this.id = id;
 	}
 
+	public void requestPower(){
+		
+	}
 	
+	public void pumpWater(){
+		
+	}
 	
+	public void pumpWait(){
+		
+	}
+
+	public Status getStatus() {
+		return status;
+	}
+
+	public void setStatus(Status status) {
+		this.status = status;
+	}
+	
+	public void run(){
+		
+	}
 }
