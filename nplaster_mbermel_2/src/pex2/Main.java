@@ -88,23 +88,22 @@ public class Main
   {
     long startTime = System.nanoTime();
 
+    System.out.println("Starting all pumps... ");
 	for(int i = 0; i < N; i++){
 		pumpNames.get(i).start();
-		System.out.println("Starting pump: " + pumpNames.get(i).getID());
 	}
-	
     // Run until the tank is full, re-painting the GUI frequently.
     while(pumpNames.get(0).getVolume() <= CAPACITY)
     {
       panel.repaint();
     }
-
+    System.out.println("Water tank has reached capacity! ");
     long stopTime = System.nanoTime();
-
+    
     // Make the output look pretty.
     java.text.NumberFormat nf = java.text.NumberFormat.getInstance();
     nf.setGroupingUsed( true );
-    System.out.printf( "%s nanoseconds.\n", nf.format( stopTime - startTime ) );
+    System.out.printf("Tank contains " + pumpNames.get(0).getVolume() + " gallons, pumped in %s nanoseconds.\n", nf.format( stopTime - startTime ) );
   }
 
   // JPanel that shows the current state of the pumping station.
@@ -197,7 +196,10 @@ public class Main
 	    		g2.setColor( Color.ORANGE );
 	    		break;
 	    	case WAITING:
-	    		g2.setColor( Color.LIGHT_GRAY );
+	    		if(pumpNames.get(i).getLeftGenerator().generating() == true)
+	    			g2.setColor( Color.ORANGE );
+	    		else
+	    			g2.setColor( Color.LIGHT_GRAY );
 	    		break;
 	    	case READY:
 	    		g2.setColor( Color.LIGHT_GRAY );
@@ -215,7 +217,10 @@ public class Main
 	    		g2.setColor( Color.ORANGE );
 	    		break;
 	    	case WAITING:
-	    		g2.setColor( Color.LIGHT_GRAY );
+	    		if(pumpNames.get(i).getRightGenerator().generating() == true)
+	    			g2.setColor( Color.ORANGE );
+	    		else
+	    			g2.setColor( Color.LIGHT_GRAY );
 	    		break;
 	    	case READY:
 	    		g2.setColor( Color.LIGHT_GRAY );
