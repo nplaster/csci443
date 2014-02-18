@@ -45,15 +45,15 @@ public class Main
     // **** Create pumping station components here. ****
 	pumpNames = new ArrayList<Pump>();
 	generators = new ArrayList<Generator>();
-	for(int i = N; i > 0; i--){
+	for(int i = 0; i < N; i++){
 		generators.add(new Generator());
 	}
-	for(int i = N; i > 0; i--){
-		if(i == N){
-			pumpNames.add(new Pump(i,generators.get(i-1), generators.get(0)));
+	for(int i = 0; i < N; i++){
+		if(i == 4){
+			pumpNames.add(new Pump(i,generators.get(N-1), generators.get(0)));
 		}
 		else{
-			pumpNames.add(new Pump(i,generators.get(i-1), generators.get(i)));
+			pumpNames.add(new Pump(i,generators.get(i+1), generators.get(i)));
 		}
 	}
 	
@@ -88,9 +88,9 @@ public class Main
   {
     long startTime = System.nanoTime();
 
-	for(int i = N; i > 0; i--){
-		pumpNames.get(i-1).start();
-		System.out.println("Starting pump: " + pumpNames.get(i-1).getID());
+	for(int i = 0; i < N; i++){
+		pumpNames.get(i).start();
+		System.out.println("Starting pump: " + pumpNames.get(i).getID());
 	}
 	
     // Run until the tank is full, re-painting the GUI frequently.
@@ -189,9 +189,41 @@ public class Main
         g2.draw( rightPowerCord );
         // Draw the inner part of the power cord to show on/off.
         g2.setStroke( stroke4 );
-        g2.setColor( Math.random() < 0.5 ? Color.ORANGE : Color.LIGHT_GRAY );   // **** Set color based on the pumps/power supplies, as appropriate! ****
+        switch(pumpNames.get(i).getStatus()){
+	    	case CLEANING:
+	    		g2.setColor( Color.LIGHT_GRAY );
+	    		break;
+	    	case PUMPING:
+	    		g2.setColor( Color.ORANGE );
+	    		break;
+	    	case WAITING:
+	    		g2.setColor( Color.LIGHT_GRAY );
+	    		break;
+	    	case READY:
+	    		g2.setColor( Color.LIGHT_GRAY );
+	    		break;
+	    	default:
+	    		g2.setColor( Color.LIGHT_GRAY );
+	    		break;
+        }
         g2.draw( leftPowerCord );
-        g2.setColor( Math.random() < 0.5 ? Color.ORANGE : Color.LIGHT_GRAY );   // **** Set color based on the pumps/power supplies, as appropriate! ****
+        switch(pumpNames.get(i).getStatus()){
+	    	case CLEANING:
+	    		g2.setColor( Color.LIGHT_GRAY );
+	    		break;
+	    	case PUMPING:
+	    		g2.setColor( Color.ORANGE );
+	    		break;
+	    	case WAITING:
+	    		g2.setColor( Color.LIGHT_GRAY );
+	    		break;
+	    	case READY:
+	    		g2.setColor( Color.LIGHT_GRAY );
+	    		break;
+	    	default:
+	    		g2.setColor( Color.LIGHT_GRAY );
+	    		break;
+        }  
         g2.draw( rightPowerCord );
 
         // The pipe from the pump to the tank.

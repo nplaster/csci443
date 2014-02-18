@@ -19,6 +19,7 @@ public class Pump extends Thread{
 		this.id = id;
 		pumpTime = LOWER_TIME_LIMIT;
 		volume = 0;
+		setStatus(Status.WAITING);
 	}
 
 	public void requestPower(){
