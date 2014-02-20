@@ -196,13 +196,13 @@ public class Main
 	    		g2.setColor( Color.ORANGE );
 	    		break;
 	    	case WAITING:
+	    		g2.setColor( Color.LIGHT_GRAY );
+	    		break;
+	    	case READY:
 	    		if(pumpNames.get(i).getLeftGenerator().generating() == true)
 	    			g2.setColor( Color.ORANGE );
 	    		else
 	    			g2.setColor( Color.LIGHT_GRAY );
-	    		break;
-	    	case READY:
-	    		g2.setColor( Color.LIGHT_GRAY );
 	    		break;
 	    	default:
 	    		g2.setColor( Color.LIGHT_GRAY );
@@ -217,13 +217,13 @@ public class Main
 	    		g2.setColor( Color.ORANGE );
 	    		break;
 	    	case WAITING:
+	    		g2.setColor( Color.LIGHT_GRAY );
+	    		break;
+	    	case READY:
 	    		if(pumpNames.get(i).getRightGenerator().generating() == true)
 	    			g2.setColor( Color.ORANGE );
 	    		else
 	    			g2.setColor( Color.LIGHT_GRAY );
-	    		break;
-	    	case READY:
-	    		g2.setColor( Color.LIGHT_GRAY );
 	    		break;
 	    	default:
 	    		g2.setColor( Color.LIGHT_GRAY );
