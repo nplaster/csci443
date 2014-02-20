@@ -11,6 +11,7 @@ public class Pump extends Thread{
 	private int id;
 	private int totalPumped;
 	private int cycle;
+	private static int counter;
 	private Status status;
 	private static int volume;
 
@@ -22,6 +23,7 @@ public class Pump extends Thread{
 		pumpTime = LOWER_TIME_LIMIT;
 		volume = 0;
 		cycle = 0;
+		counter = 0;
 		setStatus(Status.WAITING);
 	}
 
@@ -36,12 +38,7 @@ public class Pump extends Thread{
 				}
 				synchronized(rightGenerator){
 				try{
-					setStatus(Status.WAITING);
-					try {
-						sleep(500);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
+					
 					leftGenerator.startGenerator();
 					rightGenerator.startGenerator();
 					pumpWater();
@@ -56,6 +53,9 @@ public class Pump extends Thread{
 		pumpCleaning();
 	}
 	
+	public void pumpWaiting(){
+		setStatus(Status.WAITING);
+	}
 	
 	public void pumpWater(){
 		setStatus(Status.PUMPING);
@@ -67,13 +67,25 @@ public class Pump extends Thread{
 		int pumpVolume = pumpTime/100;
 		
 		for(int i = 0; i< pumpTime; i = i+pumpVolume){
-			try {
-				sleep(pumpVolume);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+			if(volume < 60000){
+				try {
+					sleep(pumpVolume);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				totalPumped += pumpVolume;
+				volume += pumpVolume;
 			}
-			volume += pumpVolume;
-			totalPumped += pumpVolume;
+		}
+		
+	}
+	
+	public void pumpCleaning(){
+		setStatus(Status.CLEANING);
+		try {
+			sleep(pumpTime);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
 	}
 
@@ -83,15 +95,6 @@ public class Pump extends Thread{
 
 	public Generator getLeftGenerator() {
 		return leftGenerator;
-	}
-
-	public void pumpCleaning(){
-		setStatus(Status.CLEANING);
-		try {
-			sleep(pumpTime);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 	}
 
 	public Status getStatus() {
@@ -109,6 +112,10 @@ public class Pump extends Thread{
 	public int getTotalPumped() {
 		return totalPumped;
 	}
+	
+	public static int getCounter() {
+		return counter;
+	}
 
 	public void setStatus(Status status) {
 		this.status = status;
@@ -118,6 +125,7 @@ public class Pump extends Thread{
 		while(volume < 60000){
 			requestPower();
 		}
+		counter++;
 		System.out.println("Pump " + id + " pumped " + totalPumped + " gallons in " + cycle + " cycles.");
 	}
 

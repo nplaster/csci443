@@ -103,7 +103,12 @@ public class Main
     // Make the output look pretty.
     java.text.NumberFormat nf = java.text.NumberFormat.getInstance();
     nf.setGroupingUsed( true );
-    System.out.printf("Tank contains " + pumpNames.get(0).getVolume() + " gallons, pumped in %s nanoseconds.\n", nf.format( stopTime - startTime ) );
+    while(true){
+    	if(pumpNames.get(0).getCounter() == N){
+        	System.out.printf("Tank contains " + pumpNames.get(0).getVolume() + " gallons, pumped in %s nanoseconds.\n", nf.format( stopTime - startTime ) );
+        	break;
+    	}
+    }
   }
 
   // JPanel that shows the current state of the pumping station.
