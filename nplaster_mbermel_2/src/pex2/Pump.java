@@ -110,7 +110,7 @@ public class Pump extends Thread{
 		return totalPumped;
 	}
 	
-	public static int getCounter() {
+	public int getCounter() {
 		return counter;
 	}
 
@@ -122,8 +122,9 @@ public class Pump extends Thread{
 		while(volume < 60000){
 			requestPower();
 		}
-		counter++;
+		
 		System.out.println("Pump " + id + " pumped " + totalPumped + " gallons in " + cycle + " cycles.");
+		counter++;
 	}
 
 }

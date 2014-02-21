@@ -49,7 +49,7 @@ public class Main
 		generators.add(new Generator());
 	}
 	for(int i = 0; i < N; i++){
-		if(i == 4){
+		if(i == N-1){
 			pumpNames.add(new Pump(i,generators.get(N-1), generators.get(0)));
 		}
 		else{
@@ -105,8 +105,11 @@ public class Main
     java.text.NumberFormat nf = java.text.NumberFormat.getInstance();
     nf.setGroupingUsed( true );
     while(true){
-        System.out.printf("Tank contains " + pumpNames.get(0).getVolume() + " gallons, pumped in %s nanoseconds.\n", nf.format( stopTime - startTime ) );
-        break;
+    	pumpNames.get(0).getCounter();
+    	if(pumpNames.get(0).getCounter() == N){
+    		System.out.printf("Tank contains " + pumpNames.get(0).getVolume() + " gallons, pumped in %s nanoseconds.\n", nf.format( stopTime - startTime ) );
+    		break;
+    	}
     }
   }
 
