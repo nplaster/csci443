@@ -26,16 +26,12 @@ public class Pump extends Thread{
 		volume = 0;
 		cycle = 0;
 		counter = 0;
-		setStatus(Status.WAITING);
+		status = Status.READY;
 	}
 
 	public void requestPower(){
 		setStatus(Status.READY);
-		try {
-			sleep(500);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+		pause(500);
 		rptleft = new RequestPowerThread(this, leftGenerator);
 		rptright = new RequestPowerThread(this, rightGenerator);
 		rptleft.run();
@@ -65,11 +61,7 @@ public class Pump extends Thread{
 		
 		for(int i = 0; i< pumpTime; i = i+pumpVolume){
 			if(volume < 60000){
-				try {
-					sleep(pumpVolume);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
+				pause(pumpVolume);
 				totalPumped += pumpVolume;
 				volume += pumpVolume;
 			}
@@ -79,8 +71,12 @@ public class Pump extends Thread{
 	
 	public void pumpCleaning(){
 		setStatus(Status.CLEANING);
+		pause(pumpTime);
+	}
+	
+	public void pause(int time){
 		try {
-			sleep(pumpTime);
+			sleep(time);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
