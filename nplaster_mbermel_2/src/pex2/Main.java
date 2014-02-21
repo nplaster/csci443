@@ -114,6 +114,7 @@ public class Main
     	}
     	if(pumpNames.get(aliveIndex).getCounter() == N){
     		System.out.printf("Tank contains " + pumpNames.get(0).getVolume() + " gallons, pumped in %s nanoseconds.\n", nf.format( stopTime - startTime ) );
+    		panel.repaint();
     		break;
     	}
     }
