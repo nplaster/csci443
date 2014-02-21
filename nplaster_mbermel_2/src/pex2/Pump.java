@@ -14,7 +14,8 @@ public class Pump extends Thread{
 	private static int counter;
 	private Status status;
 	private static int volume;
-	private RequestPowerThread rpt;
+	private RequestPowerThread rptleft;
+	private RequestPowerThread rptright;
 
 	public Pump(int id, Generator leftGenerator, Generator rightGenerator) {
 		super();
@@ -29,12 +30,28 @@ public class Pump extends Thread{
 	}
 
 	public void requestPower(){
-		rpt = new RequestPowerThread(this);
-		rpt.run();
-	}
-	
-	public void pumpWaiting(){
-		setStatus(Status.WAITING);
+		setStatus(Status.READY);
+		try {
+			sleep(500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		rptleft = new RequestPowerThread(this, leftGenerator);
+		rptright = new RequestPowerThread(this, rightGenerator);
+		rptleft.run();
+		rptright.run();
+		if(rptleft.isStartPumping() && rptright.isStartPumping()){
+			pumpWater();
+			leftGenerator.stopGenerator();
+			rightGenerator.stopGenerator();
+			pumpCleaning();
+		} else if (rptleft.isStartPumping() || rptright.isStartPumping()){
+			if(rptleft.isStartPumping()){
+				leftGenerator.stopGenerator();
+			} else {
+				rightGenerator.stopGenerator();
+			}
+		}
 	}
 	
 	public void pumpWater(){

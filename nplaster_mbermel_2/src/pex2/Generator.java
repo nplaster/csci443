@@ -1,18 +1,32 @@
 package pex2;
 
-public class Generator {
-	private boolean generating;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
-	public boolean generating(){
-		return generating;
+public class Generator {
+	private Lock locker;
+	private boolean generating;
+	
+	public Generator(){
+		locker = new ReentrantLock();
+		generating = false;
 	}
 	
-	public void startGenerator(){
-		generating = true;
+	public boolean startGenerator(){
+		return locker.tryLock();
 	}
 
 	public void stopGenerator(){
+		locker.unlock();
 		generating = false;
+	}
+	
+	public void currentlyGenerating(){
+		generating = true;
+	}
+
+	public boolean isGenerating() {
+		return generating;
 	}
 
 }
