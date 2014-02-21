@@ -105,10 +105,8 @@ public class Main
     java.text.NumberFormat nf = java.text.NumberFormat.getInstance();
     nf.setGroupingUsed( true );
     while(true){
-    	if(pumpNames.get(4).getCounter() == N){
-        	System.out.printf("Tank contains " + pumpNames.get(0).getVolume() + " gallons, pumped in %s nanoseconds.\n", nf.format( stopTime - startTime ) );
-        	break;
-    	}
+        System.out.printf("Tank contains " + pumpNames.get(0).getVolume() + " gallons, pumped in %s nanoseconds.\n", nf.format( stopTime - startTime ) );
+        break;
     }
   }
 

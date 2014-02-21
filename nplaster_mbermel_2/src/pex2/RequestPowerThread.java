@@ -19,12 +19,13 @@ public class RequestPowerThread implements Runnable {
 				startPumping = true;
 				break;
 			}
+			try {
+				currentpump.sleep(100);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 		}
-		try {
-			currentpump.sleep(100);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+
 	}
 
 	public boolean isStartPumping() {
