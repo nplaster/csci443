@@ -20,7 +20,7 @@ import javax.swing.JPanel;
 public class Main
 {
   // N > 0 must be true.  360 % N == 0 should be true for the GUI to look decent.
-  private static int N = 5;
+  private static int N = 10;
 
   /**
    * The capacity of the main water tank. This is somewhat arbitrary, but each
@@ -105,7 +105,6 @@ public class Main
     java.text.NumberFormat nf = java.text.NumberFormat.getInstance();
     nf.setGroupingUsed( true );
     while(true){
-    	pumpNames.get(0).getCounter();
     	if(pumpNames.get(0).getCounter() == N){
     		System.out.printf("Tank contains " + pumpNames.get(0).getVolume() + " gallons, pumped in %s nanoseconds.\n", nf.format( stopTime - startTime ) );
     		break;
