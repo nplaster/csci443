@@ -8,24 +8,38 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
 import com.mysql.jdbc.Connection;
 
 
-public class Search extends Applet  { 
+public class Search extends Applet implements ListSelectionListener { 
     TextField inputLine = new TextField(15); 
     Button enterButton = new Button("Enter");
-    JPanel p = new JPanel();
+    JPanel searchLayout = new JPanel(new GridLayout(0,3));
+    JPanel overallLayout = new JPanel(new BorderLayout());
+    DefaultListModel<String> listModel;
+    JList<String> list;
     
     public Search() {
+    	listModel = new DefaultListModel<String>();
+    	
+    	
+    	
+    	
     	setSize(1000, 500);
     	JLabel searchInstructions = new JLabel("Please enter your query.");
-    	p.add(searchInstructions);
-        p.add(inputLine);
+    	searchLayout.add(searchInstructions);
+        searchLayout.add(inputLine);
         
-        p.add(enterButton);
+        searchLayout.add(enterButton);
         enterButton.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent event) {
@@ -38,7 +52,8 @@ public class Search extends Applet  {
 
 	                        while( rs.next() )
 	                        {
-	                          System.out.println( rs.getString( "title" ) );
+	                          listModel.addElement( rs.getString( "title" ) );
+	                          System.out.println(rs.getString("title"));
 	                        }
 	                        
 	                        rs.close();
@@ -53,6 +68,17 @@ public class Search extends Applet  {
                     }
                 }
              );
-        add(p);
+        list = new JList<String>(listModel);
+        this.list.setSelectionMode( ListSelectionModel.SINGLE_SELECTION );
+        this.list.addListSelectionListener( this );
+        overallLayout.add( new JScrollPane( list ), BorderLayout.CENTER );
+        overallLayout.add(searchLayout, BorderLayout.NORTH);
+        add(overallLayout);
     }
+
+	@Override
+	public void valueChanged(ListSelectionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 }
