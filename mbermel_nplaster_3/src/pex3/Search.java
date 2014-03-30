@@ -32,7 +32,6 @@ public class Search extends JPanel implements ListSelectionListener {
 
 	private void basicSearch() {
 		listModel = new DefaultListModel<String>();
-    	setSize(1000, 1000);
     	JLabel searchInstructions = new JLabel("Basic Search:");
     	searchLayout.add(searchInstructions);
         searchLayout.add(inputLine);
