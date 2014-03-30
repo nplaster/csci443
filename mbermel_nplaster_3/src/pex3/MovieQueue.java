@@ -16,7 +16,8 @@ public class MovieQueue extends JPanel implements ListSelectionListener{
 	DefaultListModel<String> listModel;
     JList<String> list;
     JPanel parentFrame = new JPanel( new BorderLayout() );
-    JPanel buttonFrame = new JPanel( new GridLayout(3, 0) );
+    JPanel buttonFrame = new JPanel( new GridLayout(4, 0) );
+    Button refresh = new Button("Refresh");
     Button up = new Button("Up");
     Button down = new Button("Down");
     Button remove = new Button("Remove");
@@ -24,13 +25,14 @@ public class MovieQueue extends JPanel implements ListSelectionListener{
 	
 	public MovieQueue(){
 		listModel = new DefaultListModel<String>();
+		buttonFrame.add(refresh);
 		buttonFrame.add(up);
 		buttonFrame.add(down);
 		buttonFrame.add(remove);
 		
 		parentFrame.add(buttonFrame, BorderLayout.EAST);
-		parentFrame.setVisible(true);
 		
+		add(parentFrame);
 	}
 
 	@Override
