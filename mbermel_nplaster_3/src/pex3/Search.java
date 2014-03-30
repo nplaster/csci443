@@ -17,8 +17,6 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
-import com.mysql.jdbc.Connection;
-
 
 public class Search extends Applet implements ListSelectionListener { 
     TextField inputLine = new TextField(15); 
