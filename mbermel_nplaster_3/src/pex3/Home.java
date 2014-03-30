@@ -11,14 +11,16 @@ import javax.swing.JTabbedPane;
 public class Home extends Applet{
 	public class LayoutStructure extends JFrame{
 		private JTabbedPane tabbedPane;
-		//change to Search search since search is a JPanel
 		private JPanel search;
+		private JPanel advancedSearch;
 		private JPanel movieQueue;
 		private JPanel actors;
+		private JPanel movies;
+		
 		
 		public LayoutStructure(){
 			setTitle("Movie Queue [like Netflixs]");
-			setSize(300,200);
+			setSize(600,600);
 			setBackground(Color.gray);
 			
 			JPanel topPanel = new JPanel();
@@ -31,13 +33,20 @@ public class Home extends Applet{
 			
 			tabbedPane = new JTabbedPane();
 			tabbedPane.addTab("Search", search);
+			tabbedPane.addTab("Advanced Search", advancedSearch);
 			tabbedPane.addTab("Movie Queue", movieQueue);
+			tabbedPane.addTab("Movies", movies);
 			tabbedPane.addTab("Actors", actors);
+			
 			topPanel.add(tabbedPane, BorderLayout.CENTER);
 		}
 		
 		public void createSearchPage(){
 			search = new Search();
+		}
+		
+		public void createAdvancedSearchPage(){
+			advancedSearch = new AdvancedSearch();
 		}
 		
 		public void createMovieQueuePage(){
@@ -46,6 +55,10 @@ public class Home extends Applet{
 		
 		public void createActorsPage(){
 			actors = new ActorView();
+		}
+		
+		public void createMoviesPage(){
+			movies = new MovieView();
 		}
 		
 	}

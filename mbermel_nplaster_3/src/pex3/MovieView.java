@@ -1,5 +1,7 @@
 package pex3;
 
-public class MovieView {
+import javax.swing.JPanel;
+
+public class MovieView extends JPanel{
 
 }
