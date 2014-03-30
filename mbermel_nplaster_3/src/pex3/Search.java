@@ -1,6 +1,5 @@
 package pex3;
 
-import java.applet.Applet;
 import java.awt.*;
 import java.awt.event.*;
 import java.sql.DriverManager;
@@ -32,7 +31,6 @@ public class Search extends JPanel implements ListSelectionListener {
     }
 
 	private void basicSearch() {
-		revalidate();
 		listModel = new DefaultListModel<String>();
     	setSize(1000, 1000);
     	JLabel searchInstructions = new JLabel("Basic Search:");

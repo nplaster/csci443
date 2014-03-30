@@ -27,9 +27,11 @@ public class Home extends Applet{
 			topPanel.setLayout(new BorderLayout());
 			getContentPane().add(topPanel);
 			
-			createSearchPage();
 			createMovieQueuePage();
+			createSearchPage();
+			createAdvancedSearchPage();
 			createActorsPage();
+			createMoviesPage();
 			
 			tabbedPane = new JTabbedPane();
 			tabbedPane.addTab("Search", search);
@@ -41,12 +43,12 @@ public class Home extends Applet{
 			topPanel.add(tabbedPane, BorderLayout.CENTER);
 		}
 		
-		public void createSearchPage(){
-			search = new Search();
-		}
-		
 		public void createAdvancedSearchPage(){
 			advancedSearch = new AdvancedSearch();
+		}
+		
+		public void createSearchPage(){
+			search = new Search();
 		}
 		
 		public void createMovieQueuePage(){
@@ -65,6 +67,7 @@ public class Home extends Applet{
 	
 	public void init(){
 		LayoutStructure layout = new LayoutStructure();
+		//layout.pack();
 		layout.setVisible(true);
 	}
 }
