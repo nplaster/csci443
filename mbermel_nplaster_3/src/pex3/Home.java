@@ -20,7 +20,7 @@ public class Home extends Applet{
 		
 		public LayoutStructure(){
 			setTitle("Movie Queue [like Netflixs]");
-			setSize(300,200);
+			setSize(600,600);
 			setBackground(Color.gray);
 			
 			JPanel topPanel = new JPanel();
