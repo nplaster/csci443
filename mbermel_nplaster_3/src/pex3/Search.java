@@ -21,9 +21,8 @@ import javax.swing.event.ListSelectionListener;
 public class Search extends JPanel implements ListSelectionListener { 
     TextField inputLine = new TextField(15); 
     Button enterButton = new Button("Search");
-    Button advancedSearch = new Button("Advanced");
-    Button basicSearch = new Button("Basic");
-    JPanel searchLayout = new JPanel(new GridLayout(0,4));
+    
+    JPanel searchLayout = new JPanel(new GridLayout(0,3));
     JPanel overallLayout = new JPanel(new BorderLayout());
     DefaultListModel<String> listModel;
     JList<String> list;
@@ -41,21 +40,7 @@ public class Search extends JPanel implements ListSelectionListener {
         searchLayout.add(inputLine);
         
         searchLayout.add(enterButton);
-        searchLayout.add(advancedSearch);
-        searchLayout.add(basicSearch);
-        basicSearch.setVisible(false);
-        basicSearch.setPreferredSize(new Dimension(0,0));
-        repaint();
-        advancedSearch.addActionListener(
-        		new ActionListener(){
-        			public void actionPerformed(ActionEvent event){
-        				searchLayout.removeAll();
-        				overallLayout.removeAll();
-        				removeAll();
-        				advancedSearch();
-        				
-        			}
-        		});
+        
         enterButton.addActionListener(
                 new ActionListener() {
                     public void actionPerformed(ActionEvent event) {
@@ -105,10 +90,6 @@ public class Search extends JPanel implements ListSelectionListener {
         add(overallLayout);
 		
 	}
-
-	protected void advancedSearch() {
-		
-		
 
 	@Override
 	public void valueChanged(ListSelectionEvent e) {
