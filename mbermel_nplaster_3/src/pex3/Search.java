@@ -18,7 +18,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 
-public class Search extends Applet implements ListSelectionListener { 
+public class Search extends JPanel implements ListSelectionListener { 
     TextField inputLine = new TextField(15); 
     Button enterButton = new Button("Search");
     Button advancedSearch = new Button("Advanced");

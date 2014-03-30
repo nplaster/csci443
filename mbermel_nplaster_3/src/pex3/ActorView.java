@@ -1,5 +1,7 @@
 package pex3;
 
-public class ActorView {
+import javax.swing.JPanel;
+
+public class ActorView extends JPanel {
 
 }
