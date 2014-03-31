@@ -13,6 +13,8 @@ import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -28,15 +30,52 @@ public class MovieQueue extends JPanel implements ListSelectionListener{
     
 	
 	public MovieQueue(){
+		setup();
+		
+		add(parentFrame);
+	}
+	
+	public void setup(){
 		listModel = new DefaultListModel<String>();
 		buttonFrame.add(refresh);
 		buttonFrame.add(up);
 		buttonFrame.add(down);
 		buttonFrame.add(remove);
-		
 		parentFrame.add(buttonFrame, BorderLayout.EAST);
-		
-		add(parentFrame);
+		listModel.clear();
+    	java.sql.Connection con;
+        try{
+            con = DriverManager.getConnection( "jdbc:mysql://localhost:3306/sakila", "root", "" );
+            Statement stmt = con.createStatement();
+            stmt.executeUpdate( "drop table if exists renamestate" );
+            stmt.executeUpdate( "create table renamestate(position integer, title varchar(50))" );
+            stmt.executeUpdate( "insert into renamestate (position, title) values (1,'Academy Dinosaur')" );
+            stmt.executeUpdate( "insert into renamestate (position, title) values (2,'Anything Savannah')" );
+            stmt.executeUpdate( "insert into renamestate (position, title) values (3,'Beast Hunchback')" );
+            stmt.executeUpdate( "insert into renamestate (position, title) values (4,'Zorro Ark')" );
+            stmt.executeUpdate( "insert into renamestate (position, title) values (5,'Caribbean Liberty')" );
+            stmt.executeUpdate( "insert into renamestate (position, title) values (6,'Wild Apollo')" );
+            stmt.executeUpdate( "insert into renamestate (position, title) values (7,'Boulevard Mob')" );
+            ResultSet rs = stmt.executeQuery( "select * from renamestate order by position" );
+            while( rs.next() )
+            {
+              listModel.addElement( rs.getString( "title" ) );
+            }
+            
+            rs.close();
+            stmt.close();
+            con.close();
+        }
+        catch( SQLException e )
+        {
+          e.printStackTrace();
+        }
+        
+        list = new JList<String>(listModel);
+        this.list.setSelectionMode( ListSelectionModel.SINGLE_SELECTION );
+        this.list.addListSelectionListener( this );
+        parentFrame.add( new JScrollPane( list ), BorderLayout.CENTER );
+	
 	}
 	
 	public void refresh(){
