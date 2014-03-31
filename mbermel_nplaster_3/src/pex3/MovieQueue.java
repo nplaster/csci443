@@ -12,7 +12,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import javax.swing.DefaultListModel;
-import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -48,19 +47,26 @@ public class MovieQueue extends JPanel implements ListSelectionListener{
 		buttonFrame.add(up);
 		up.addActionListener(new ActionListener(){
         	public void actionPerformed(ActionEvent e) {
-        	      up();
+        			String selectedItem = list.getSelectedValue();
+        			up(selectedItem);
         	      }
         });
 		buttonFrame.add(down);
 		down.addActionListener(new ActionListener(){
         	public void actionPerformed(ActionEvent e) {
-        	      down();
+        			String selectedItem = list.getSelectedValue();
+        			down(selectedItem);
         	      }
         });
 		buttonFrame.add(remove);
 		remove.addActionListener(new ActionListener(){
         	public void actionPerformed(ActionEvent e) {
+
         	      refresh();
+
+        			String selectedItem = list.getSelectedValue();
+        			remove(selectedItem);
+
         	      }
         });
 		parentFrame.add(buttonFrame, BorderLayout.EAST);
@@ -123,16 +129,94 @@ public class MovieQueue extends JPanel implements ListSelectionListener{
         }
 	}
 	
-	public void up(){
-		
+	public void up(String titleString){
+		listModel.clear();
+		java.sql.Connection con;
+        try{
+            con = DriverManager.getConnection( "jdbc:mysql://localhost:3306/sakila", "root", "" );
+            Statement stmt = con.createStatement();
+            ResultSet current = stmt.executeQuery("select position from renamestate where title='"+titleString+"'");
+            int newnum = 0;
+            int previous = 0;
+            while(current.next()){
+	            newnum = current.getInt(1);
+	            previous = newnum;
+	            newnum = newnum - 1;
+            }
+            stmt.executeUpdate( "update renamestate set position="+previous+" where position="+newnum);
+            stmt.executeUpdate( "update renamestate set position="+newnum+" where title='"+titleString+"'");
+            ResultSet rs = stmt.executeQuery( "select * from renamestate order by position" );
+
+            while( rs.next() )
+            {
+              listModel.addElement( rs.getString( "title" ) );
+            }
+            
+            rs.close();
+            stmt.close();
+            con.close();
+        }
+        catch( SQLException e )
+        {
+          e.printStackTrace();
+        }
 	}
 	
-	public void down(){
-		
+	public void down(String titleString){
+		listModel.clear();
+		java.sql.Connection con;
+        try{
+            con = DriverManager.getConnection( "jdbc:mysql://localhost:3306/sakila", "root", "" );
+            Statement stmt = con.createStatement();
+            ResultSet current = stmt.executeQuery("select position from renamestate where title='"+titleString+"'");
+            int newnum = 0;
+            int previous = 0;
+            while(current.next()){
+	            newnum = current.getInt(1);
+	            previous = newnum;
+	            newnum = newnum + 1;
+            }
+            stmt.executeUpdate( "update renamestate set position="+previous+" where position="+newnum);
+            stmt.executeUpdate( "update renamestate set position="+newnum+" where title='"+titleString+"'");
+            ResultSet rs = stmt.executeQuery( "select * from renamestate order by position" );
+
+            while( rs.next() )
+            {
+              listModel.addElement( rs.getString( "title" ) );
+            }
+            
+            rs.close();
+            stmt.close();
+            con.close();
+        }
+        catch( SQLException e )
+        {
+          e.printStackTrace();
+        }
 	}
 	
-	public void remove(){
-		
+	public void remove(String titleString){
+		listModel.clear();
+		java.sql.Connection con;
+        try{
+            con = DriverManager.getConnection( "jdbc:mysql://localhost:3306/sakila", "root", "" );
+            Statement stmt = con.createStatement();
+            stmt.executeUpdate( "delete from renamestate where title='"+titleString+"'");
+            ResultSet rs = stmt.executeQuery( "select * from renamestate order by position" );
+
+            while( rs.next() )
+            {
+              listModel.addElement( rs.getString( "title" ) );
+            }
+            
+            rs.close();
+            stmt.close();
+            con.close();
+        }
+        catch( SQLException e )
+        {
+          e.printStackTrace();
+        }
 	}
 
 	@Override
