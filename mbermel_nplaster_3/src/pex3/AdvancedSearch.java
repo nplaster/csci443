@@ -6,6 +6,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
@@ -18,11 +19,11 @@ import javax.swing.event.ListSelectionListener;
 
 
 public class AdvancedSearch extends JPanel implements ListSelectionListener { 
-    TextField inputLine = new TextField(15);
-    TextField inputLine1 = new TextField(15);
-    TextField inputLine2 = new TextField(15);
-    TextField inputLine3 = new TextField(15);
-    TextField inputLine4 = new TextField(15);
+    TextField inputtitle = new TextField(15);
+    TextField inputgenre = new TextField(15);
+    TextField inputactor = new TextField(15);
+    TextField inputrating = new TextField(15);
+    TextField inputyear = new TextField(15);
     Button enterButton = new Button("Search");
     
     JPanel searchLayout = new JPanel(new GridLayout(0,4));
@@ -40,19 +41,19 @@ public class AdvancedSearch extends JPanel implements ListSelectionListener {
     	JLabel genreBox = new JLabel("Genre");
     	JLabel actorBox = new JLabel("Actor");
     	JLabel ratingBox = new JLabel("Rating");
-    	JLabel yearBox = new JLabel("Year");
+    	JLabel yearBox = new JLabel("Length");
     	JLabel emptyBox = new JLabel(" ");
     	JLabel searchInstructions = new JLabel("Title");
     	searchLayout.add(genreBox);
-    	searchLayout.add(inputLine1);
+    	searchLayout.add(inputgenre);
     	searchLayout.add(actorBox);
-    	searchLayout.add(inputLine2);
+    	searchLayout.add(inputactor);
     	searchLayout.add(ratingBox);
-    	searchLayout.add(inputLine3);
+    	searchLayout.add(inputrating);
     	searchLayout.add(yearBox);
-    	searchLayout.add(inputLine4);
+    	searchLayout.add(inputyear);
     	searchLayout.add(searchInstructions);
-        searchLayout.add(inputLine);
+        searchLayout.add(inputtitle);
         searchLayout.add(emptyBox);
         searchLayout.add(enterButton);
         
@@ -62,16 +63,16 @@ public class AdvancedSearch extends JPanel implements ListSelectionListener {
                     	// Clear the list model so that it ONLY shows the new results set.
                     	listModel.clear();
                     	java.sql.Connection con;
-                        String searchString = inputLine.getText();
-                        String genreString = inputLine1.getText();
-                        String actorString = inputLine2.getText();
-                        String ratingString = inputLine3.getText();
-                        String yearString = inputLine4.getText();
+                        String searchString = inputtitle.getText();
+                        String genreString = inputgenre.getText();
+                        String actorString = inputactor.getText();
+                        String ratingString = inputrating.getText();
+                        String lengthString = inputyear.getText();
                         try{
 	                        con = DriverManager.getConnection( "jdbc:mysql://localhost:3306/sakila", "root", "" );
 	                        Statement stmt = con.createStatement();
-	                        ResultSet rs = stmt.executeQuery( "select * from film_text where description LIKE '%" + searchString + "%' or title LIKE '%" + searchString + "%'");
-
+	                        ResultSet rs = stmt.executeQuery( "select * from film_list where title LIKE '%" + searchString + "%' and"
+	                        		+ " category like '%"+ genreString+"%' and rating like '%"+ratingString+"%' and actors like '%"+ actorString + "%' and length like '%" + lengthString + "%'");
 	                        while( rs.next() )
 	                        {
 	                          listModel.addElement( rs.getString( "title" ) );
