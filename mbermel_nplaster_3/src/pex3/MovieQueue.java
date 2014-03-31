@@ -3,14 +3,12 @@ package pex3;
 import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.GridLayout;
-import java.awt.TextArea;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 import javax.swing.DefaultListModel;
-import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
