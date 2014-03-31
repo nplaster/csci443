@@ -4,6 +4,10 @@ import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.GridLayout;
 import java.awt.TextArea;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JLabel;
@@ -33,6 +37,30 @@ public class MovieQueue extends JPanel implements ListSelectionListener{
 		parentFrame.add(buttonFrame, BorderLayout.EAST);
 		
 		add(parentFrame);
+	}
+	
+	public void refresh(){
+		listModel.clear();
+    	java.sql.Connection con;
+        try{
+            con = DriverManager.getConnection( "jdbc:mysql://localhost:3306/sakila", "root", "" );
+            Statement stmt = con.createStatement();
+            // Add movieQueueTable to database!!!!
+            ResultSet rs = stmt.executeQuery( "select * from movieQueueTable");
+
+            while( rs.next() )
+            {
+              listModel.addElement( rs.getString( "title" ) );
+            }
+            
+            rs.close();
+            stmt.close();
+            con.close();
+        }
+        catch( SQLException e )
+        {
+          e.printStackTrace();
+        }
 	}
 
 	@Override
