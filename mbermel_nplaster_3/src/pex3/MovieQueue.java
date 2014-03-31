@@ -61,8 +61,12 @@ public class MovieQueue extends JPanel implements ListSelectionListener{
 		buttonFrame.add(remove);
 		remove.addActionListener(new ActionListener(){
         	public void actionPerformed(ActionEvent e) {
+
+        	      refresh();
+
         			String selectedItem = list.getSelectedValue();
         			remove(selectedItem);
+
         	      }
         });
 		parentFrame.add(buttonFrame, BorderLayout.EAST);
