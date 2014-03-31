@@ -9,16 +9,17 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 public class Home extends Applet{
+	protected static  JTabbedPane tabbedPane;
+	protected  JPanel search;
+	protected  JPanel advancedSearch;
+	protected  JPanel movieQueue;
+	protected  JPanel actors;
+	protected static  MovieView movies;
 	public class LayoutStructure extends JFrame{
-		private JTabbedPane tabbedPane;
-		private JPanel search;
-		private JPanel advancedSearch;
-		private JPanel movieQueue;
-		private JPanel actors;
-		private JPanel movies;
 		
 		
-		public LayoutStructure(){
+		
+		private LayoutStructure(){
 			setTitle("Movie Queue [like Netflixs]");
 			setSize(600,600);
 			setBackground(Color.gray);
@@ -43,26 +44,34 @@ public class Home extends Applet{
 			topPanel.add(tabbedPane, BorderLayout.CENTER);
 		}
 		
-		public void createAdvancedSearchPage(){
+		public  void createAdvancedSearchPage(){
 			advancedSearch = new AdvancedSearch();
 		}
 		
-		public void createSearchPage(){
+		public  void createSearchPage(){
 			search = new Search();
 		}
 		
-		public void createMovieQueuePage(){
+		public  void createMovieQueuePage(){
 			movieQueue = new MovieQueue();
 		}
 		
-		public void createActorsPage(){
+		public  void createActorsPage(){
 			actors = new ActorView();
 		}
 		
-		public void createMoviesPage(){
+		public  void createMoviesPage(){
 			movies = new MovieView();
 		}
 		
+	}
+	
+	public static JTabbedPane getTabbedPane(){
+		return tabbedPane;
+	}
+	
+	public static MovieView getMovieJPanel(){
+		return movies;
 	}
 	
 	public void init(){

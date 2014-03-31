@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -97,14 +98,35 @@ public class AdvancedSearch extends JPanel implements ListSelectionListener {
         final Button moreInfo = new Button("More Info");
         
         moreInfo.addActionListener(new ActionListener(){
-        	public void actionPerformed(ActionEvent e) {
-        	      // This method can be called only if
-        	      // there's a valid selection
-        	      // so go ahead and remove whatever's selected.
-        	      String selectedItem = list.getSelectedValue();
-        	      System.out.println(selectedItem + "Debug info from Search.java line 81");
-        	      }
-        });
+			public void actionPerformed(ActionEvent e) {
+				// This method can be called only if
+				// there's a valid selection
+				// so go ahead and remove whatever's selected.
+				String selectedItem = list.getSelectedValue();
+				int movieID;
+				java.sql.Connection con;
+				try{
+					con = DriverManager.getConnection( "jdbc:mysql://localhost:3306/sakila", "root", "" );
+					Statement stmt = con.createStatement();
+					ResultSet rs = stmt.executeQuery( "select * from film_text where title='" + selectedItem+"'");
+					rs.next();
+					movieID = Integer.parseInt(rs.getString("film_id"));
+					
+					JTabbedPane tp = Home.getTabbedPane();
+					MovieView movies = Home.getMovieJPanel();
+					movies.displayMovieInfo(movieID);
+					tp.setSelectedIndex(3);
+
+					rs.close();
+					stmt.close();
+					con.close();
+				}
+				catch( SQLException e1 )
+				{
+					e1.printStackTrace();
+				}	
+			}
+		});
         overallLayout.add(moreInfo, BorderLayout.EAST);
         add(overallLayout);
 		

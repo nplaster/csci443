@@ -60,7 +60,7 @@ public class MovieQueue extends JPanel implements ListSelectionListener{
 		buttonFrame.add(remove);
 		remove.addActionListener(new ActionListener(){
         	public void actionPerformed(ActionEvent e) {
-        	      remove();
+        	      refresh();
         	      }
         });
 		parentFrame.add(buttonFrame, BorderLayout.EAST);
