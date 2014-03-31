@@ -125,12 +125,70 @@ public class MovieQueue extends JPanel implements ListSelectionListener{
         }
 	}
 	
-	public void up(String title){
-		
+	public void up(String titleString){
+		listModel.clear();
+		java.sql.Connection con;
+        try{
+            con = DriverManager.getConnection( "jdbc:mysql://localhost:3306/sakila", "root", "" );
+            Statement stmt = con.createStatement();
+            ResultSet current = stmt.executeQuery("select position from renamestate where title='"+titleString+"'");
+            int newnum = 0;
+            int previous = 0;
+            while(current.next()){
+	            newnum = current.getInt(1);
+	            previous = newnum;
+	            newnum = newnum - 1;
+            }
+            stmt.executeUpdate( "update renamestate set position="+previous+" where position="+newnum);
+            stmt.executeUpdate( "update renamestate set position="+newnum+" where title='"+titleString+"'");
+            ResultSet rs = stmt.executeQuery( "select * from renamestate order by position" );
+
+            while( rs.next() )
+            {
+              listModel.addElement( rs.getString( "title" ) );
+            }
+            
+            rs.close();
+            stmt.close();
+            con.close();
+        }
+        catch( SQLException e )
+        {
+          e.printStackTrace();
+        }
 	}
 	
-	public void down(String title){
-		
+	public void down(String titleString){
+		listModel.clear();
+		java.sql.Connection con;
+        try{
+            con = DriverManager.getConnection( "jdbc:mysql://localhost:3306/sakila", "root", "" );
+            Statement stmt = con.createStatement();
+            ResultSet current = stmt.executeQuery("select position from renamestate where title='"+titleString+"'");
+            int newnum = 0;
+            int previous = 0;
+            while(current.next()){
+	            newnum = current.getInt(1);
+	            previous = newnum;
+	            newnum = newnum + 1;
+            }
+            stmt.executeUpdate( "update renamestate set position="+previous+" where position="+newnum);
+            stmt.executeUpdate( "update renamestate set position="+newnum+" where title='"+titleString+"'");
+            ResultSet rs = stmt.executeQuery( "select * from renamestate order by position" );
+
+            while( rs.next() )
+            {
+              listModel.addElement( rs.getString( "title" ) );
+            }
+            
+            rs.close();
+            stmt.close();
+            con.close();
+        }
+        catch( SQLException e )
+        {
+          e.printStackTrace();
+        }
 	}
 	
 	public void remove(String titleString){
