@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import javax.swing.DefaultListModel;
-import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -15,6 +14,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+@SuppressWarnings("serial")
 public class MovieView extends JPanel implements ListSelectionListener {
 
 	public MovieView(){
@@ -24,6 +24,7 @@ public class MovieView extends JPanel implements ListSelectionListener {
 	    
 	    listModel = new DefaultListModel<String>();
 	    java.sql.Connection con;
+	    // Populate list model by default with a list of all movies
         try{
             con = DriverManager.getConnection( "jdbc:mysql://localhost:3306/sakila", "root", "" );
             Statement stmt = con.createStatement();
@@ -50,6 +51,7 @@ public class MovieView extends JPanel implements ListSelectionListener {
 	}
 	
 	public void displayMovieInfo(int movieID){
+		// Display specific movie info
 		removeAll();
 		JPanel movieInfo = new Movies(movieID);
 		add(movieInfo, BorderLayout.CENTER);
@@ -59,7 +61,6 @@ public class MovieView extends JPanel implements ListSelectionListener {
 	
 	@Override
 	public void valueChanged(ListSelectionEvent arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 

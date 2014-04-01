@@ -18,6 +18,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 
+@SuppressWarnings("serial")
 public class Search extends JPanel implements ListSelectionListener { 
 	TextField inputLine = new TextField(15); 
 	Button enterButton = new Button("Search");
@@ -68,6 +69,7 @@ public class Search extends JPanel implements ListSelectionListener {
 					}
 				}
 				);
+		// Create items. Add to panels.
 		list = new JList<String>(listModel);
 		this.list.setSelectionMode( ListSelectionModel.SINGLE_SELECTION );
 		this.list.addListSelectionListener( this );
@@ -77,12 +79,10 @@ public class Search extends JPanel implements ListSelectionListener {
 
 		moreInfo.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				// This method can be called only if
-				// there's a valid selection
-				// so go ahead and remove whatever's selected.
 				String selectedItem = list.getSelectedValue();
 				int movieID;
 				java.sql.Connection con;
+				// Populate list box with search results.
 				try{
 					con = DriverManager.getConnection( "jdbc:mysql://localhost:3306/sakila", "root", "" );
 					Statement stmt = con.createStatement();
@@ -110,6 +110,8 @@ public class Search extends JPanel implements ListSelectionListener {
 				
 			}
 		});
+		
+		// Add all components to actual JPanel.
 		overallLayout.add(moreInfo, BorderLayout.EAST);
 		add(overallLayout);
 
@@ -117,7 +119,6 @@ public class Search extends JPanel implements ListSelectionListener {
 
 	@Override
 	public void valueChanged(ListSelectionEvent e) {
-		// TODO Auto-generated method stub
 
 	}
 }

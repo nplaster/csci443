@@ -17,14 +17,15 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
+@SuppressWarnings("serial")
 public class Movies extends JPanel implements ListSelectionListener {
 	JList<String> list;
 	public Movies(int movieID){
+		// Set the border layout
 		super(new BorderLayout());
 		
 		DefaultListModel<String> listModel;
@@ -32,6 +33,7 @@ public class Movies extends JPanel implements ListSelectionListener {
 	    
 	    listModel = new DefaultListModel<String>();
 	    java.sql.Connection con;
+	    // Populate the movie information by looking up the supplied movie ID in the database.
         try{
             con = DriverManager.getConnection( "jdbc:mysql://localhost:3306/sakila", "root", "" );
             Statement stmt = con.createStatement();
@@ -99,6 +101,7 @@ public class Movies extends JPanel implements ListSelectionListener {
             
             ResultSet isMovieInQueue = stmt.executeQuery( "select * from Arkansas_Queue where title='" + title + "'");
             
+            // If the movie is in the queue, only display the remove button. Otherwise, only display the add button.
             if(!isMovieInQueue.isBeforeFirst()){
             	northPanelWithAddButton.add(movieTitle);
             	northPanelWithAddButton.add(addToQueue);
@@ -119,9 +122,9 @@ public class Movies extends JPanel implements ListSelectionListener {
             movieDescription.setLineWrap(true);
             skeleton.add(movieDescription);
             
-            
+            // Get the list of actors
             String[] actorList = rs.getString("actors").replaceAll("^[,\\s]+", "").split(",");
-            
+            // Strip leading white space from actor names and add to list
             for(int i = 0; i<actorList.length; i++){
             	String trimmedActorsName = actorList[i].replaceAll("^[,\\s]+", "");
             	listModel.addElement(trimmedActorsName);
@@ -131,6 +134,7 @@ public class Movies extends JPanel implements ListSelectionListener {
     		list.setSelectionMode( ListSelectionModel.SINGLE_SELECTION );
     		list.addListSelectionListener( this );
             
+    		// Add components
             JLabel actors = new JLabel("Actors in this film:");
             skeleton.add(actors);
             actingPanel.add(new JScrollPane(list));
@@ -138,13 +142,9 @@ public class Movies extends JPanel implements ListSelectionListener {
             
             actorInfo.addActionListener(new ActionListener(){
     			public void actionPerformed(ActionEvent e) {
-    				// This method can be called only if
-    				// there's a valid selection
-    				// so go ahead and remove whatever's selected.
     				String selectedItem = list.getSelectedValue();
     				String firstName = selectedItem.substring(0,selectedItem.indexOf(" "));
     				String lastName = selectedItem.substring(selectedItem.indexOf(" ") +1, selectedItem.length());
-    				int movieID;
     				java.sql.Connection con;
     				try{
     					con = DriverManager.getConnection( "jdbc:mysql://localhost:3306/sakila", "root", "" );
@@ -174,7 +174,7 @@ public class Movies extends JPanel implements ListSelectionListener {
     			}
     		});
             
-            
+            // Add panels to overall JPanel
             actingPanel.add(actorInfo);
             skeleton.add(actingPanel);
             
@@ -191,7 +191,6 @@ public class Movies extends JPanel implements ListSelectionListener {
 	
 	@Override
 	public void valueChanged(ListSelectionEvent arg0) {
-		// TODO Auto-generated method stub
 		
 	}
 
