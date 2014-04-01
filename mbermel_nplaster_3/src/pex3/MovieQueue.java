@@ -20,9 +20,10 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 public class MovieQueue extends JPanel implements ListSelectionListener{
+	
 	DefaultListModel<String> listModel;
     JList<String> list;
-    JPanel parentFrame = new JPanel( new BorderLayout() );
+    //JPanel parentFrame = new JPanel( new BorderLayout() );
     JPanel buttonFrame = new JPanel( new GridLayout(4, 0) );
     Button refresh = new Button("Refresh");
     Button up = new Button("Up");
@@ -31,9 +32,10 @@ public class MovieQueue extends JPanel implements ListSelectionListener{
     
 	
 	public MovieQueue(){
+		super(new BorderLayout());
 		setup();
 		
-		add(parentFrame);
+		//add(parentFrame);
 	}
 	
 	public void setup(){
@@ -69,7 +71,7 @@ public class MovieQueue extends JPanel implements ListSelectionListener{
 
         	      }
         });
-		parentFrame.add(buttonFrame, BorderLayout.EAST);
+		//parentFrame.add(buttonFrame, BorderLayout.EAST);
 		listModel.clear();
     	java.sql.Connection con;
         try{
@@ -102,7 +104,8 @@ public class MovieQueue extends JPanel implements ListSelectionListener{
         list = new JList<String>(listModel);
         this.list.setSelectionMode( ListSelectionModel.SINGLE_SELECTION );
         this.list.addListSelectionListener( this );
-        parentFrame.add( new JScrollPane( list ), BorderLayout.CENTER );
+        add( new JScrollPane( list ), BorderLayout.CENTER );
+        add(buttonFrame, BorderLayout.EAST);
 	
 	}
 	
