@@ -38,7 +38,7 @@ public class Movies extends JPanel implements ListSelectionListener {
             add(skeleton, BorderLayout.CENTER);
             ResultSet rs = stmt.executeQuery( "select * from film_text where film_id=" +movieID);
             rs.next();
-            String title = rs.getString("title");
+            final String title = rs.getString("title");
             JPanel northPanelWithAddButton = new JPanel(new GridLayout(0,2));
             JPanel northPanelWithRemoveButton = new JPanel(new GridLayout(0,2));
             JLabel movieTitle = new JLabel(rs.getString("title"));
@@ -47,7 +47,54 @@ public class Movies extends JPanel implements ListSelectionListener {
             Button addToQueue = new Button("Add to Queue");
             Button removeFromQueue = new Button("Remove from Queue");
             northPanelWithAddButton.add(addToQueue);
+            addToQueue.addActionListener(
+    				new ActionListener() {
+    					public void actionPerformed(ActionEvent event) {
+    						// Clear the list model so that it ONLY shows the new results set.
+    						java.sql.Connection con;
+    						try{
+    							con = DriverManager.getConnection( "jdbc:mysql://localhost:3306/sakila", "root", "" );
+    							Statement stmt = con.createStatement();
+    							ResultSet colcount = stmt.executeQuery("select count(title) from renamestate");
+    							colcount.next();
+    							int number = colcount.getInt(1);
+    							number = number + 1;
+    							stmt.executeUpdate( "insert into renamestate (position, title) values ("+number+" ,'"+title+"')" );
+
+    							stmt.close();
+    							con.close();
+    						}
+    						catch( SQLException e )
+    						{
+    							e.printStackTrace();
+    						}
+
+    					}
+    				}
+    				);
             northPanelWithRemoveButton.add(removeFromQueue);
+            
+            removeFromQueue.addActionListener(
+    				new ActionListener() {
+    					public void actionPerformed(ActionEvent event) {
+    						// Clear the list model so that it ONLY shows the new results set.
+    						java.sql.Connection con;
+    						try{
+    							con = DriverManager.getConnection( "jdbc:mysql://localhost:3306/sakila", "root", "" );
+    							Statement stmt = con.createStatement();
+    							stmt.executeUpdate( "delete from renamestate where title='"+title+"'");
+
+    							stmt.close();
+    							con.close();
+    						}
+    						catch( SQLException e )
+    						{
+    							e.printStackTrace();
+    						}
+
+    					}
+    				}
+    				);
             
             ResultSet isMovieInQueue = stmt.executeQuery( "select * from renamestate where title='" + title + "'");
             
