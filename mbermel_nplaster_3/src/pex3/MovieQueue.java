@@ -63,9 +63,6 @@ public class MovieQueue extends JPanel implements ListSelectionListener{
 		buttonFrame.add(remove);
 		remove.addActionListener(new ActionListener(){
         	public void actionPerformed(ActionEvent e) {
-
-        	      refresh();
-
         			String selectedItem = list.getSelectedValue();
         			remove(selectedItem);
 
@@ -77,16 +74,16 @@ public class MovieQueue extends JPanel implements ListSelectionListener{
         try{
             con = DriverManager.getConnection( "jdbc:mysql://localhost:3306/sakila", "root", "" );
             Statement stmt = con.createStatement();
-            stmt.executeUpdate( "drop table if exists renamestate" );
-            stmt.executeUpdate( "create table renamestate(position integer, title varchar(50))" );
-            stmt.executeUpdate( "insert into renamestate (position, title) values (1,'Academy Dinosaur')" );
-            stmt.executeUpdate( "insert into renamestate (position, title) values (2,'Anything Savannah')" );
-            stmt.executeUpdate( "insert into renamestate (position, title) values (3,'Beast Hunchback')" );
-            stmt.executeUpdate( "insert into renamestate (position, title) values (4,'Zorro Ark')" );
-            stmt.executeUpdate( "insert into renamestate (position, title) values (5,'Caribbean Liberty')" );
-            stmt.executeUpdate( "insert into renamestate (position, title) values (6,'Wild Apollo')" );
-            stmt.executeUpdate( "insert into renamestate (position, title) values (7,'Boulevard Mob')" );
-            ResultSet rs = stmt.executeQuery( "select * from renamestate order by position" );
+            stmt.executeUpdate( "drop table if exists Arkansas_Queue" );
+            stmt.executeUpdate( "create table Arkansas_Queue(position integer, title varchar(50))" );
+            stmt.executeUpdate( "insert into Arkansas_Queue (position, title) values (1,'Academy Dinosaur')" );
+            stmt.executeUpdate( "insert into Arkansas_Queue (position, title) values (2,'Anything Savannah')" );
+            stmt.executeUpdate( "insert into Arkansas_Queue (position, title) values (3,'Beast Hunchback')" );
+            stmt.executeUpdate( "insert into Arkansas_Queue (position, title) values (4,'Zorro Ark')" );
+            stmt.executeUpdate( "insert into Arkansas_Queue (position, title) values (5,'Caribbean Liberty')" );
+            stmt.executeUpdate( "insert into Arkansas_Queue (position, title) values (6,'Wild Apollo')" );
+            stmt.executeUpdate( "insert into Arkansas_Queue (position, title) values (7,'Boulevard Mob')" );
+            ResultSet rs = stmt.executeQuery( "select * from Arkansas_Queue order by position" );
             while( rs.next() )
             {
               listModel.addElement( rs.getString( "title" ) );
@@ -115,7 +112,7 @@ public class MovieQueue extends JPanel implements ListSelectionListener{
         try{
             con = DriverManager.getConnection( "jdbc:mysql://localhost:3306/sakila", "root", "" );
             Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery( "select * from renamestate order by position" );
+            ResultSet rs = stmt.executeQuery( "select * from Arkansas_Queue order by position" );
 
             while( rs.next() )
             {
@@ -138,7 +135,7 @@ public class MovieQueue extends JPanel implements ListSelectionListener{
         try{
             con = DriverManager.getConnection( "jdbc:mysql://localhost:3306/sakila", "root", "" );
             Statement stmt = con.createStatement();
-            ResultSet current = stmt.executeQuery("select position from renamestate where title='"+titleString+"'");
+            ResultSet current = stmt.executeQuery("select position from Arkansas_Queue where title='"+titleString+"'");
             int newnum = 0;
             int previous = 0;
             while(current.next()){
@@ -146,9 +143,9 @@ public class MovieQueue extends JPanel implements ListSelectionListener{
 	            previous = newnum;
 	            newnum = newnum - 1;
             }
-            stmt.executeUpdate( "update renamestate set position="+previous+" where position="+newnum);
-            stmt.executeUpdate( "update renamestate set position="+newnum+" where title='"+titleString+"'");
-            ResultSet rs = stmt.executeQuery( "select * from renamestate order by position" );
+            stmt.executeUpdate( "update Arkansas_Queue set position="+previous+" where position="+newnum);
+            stmt.executeUpdate( "update Arkansas_Queue set position="+newnum+" where title='"+titleString+"'");
+            ResultSet rs = stmt.executeQuery( "select * from Arkansas_Queue order by position" );
 
             while( rs.next() )
             {
@@ -171,7 +168,7 @@ public class MovieQueue extends JPanel implements ListSelectionListener{
         try{
             con = DriverManager.getConnection( "jdbc:mysql://localhost:3306/sakila", "root", "" );
             Statement stmt = con.createStatement();
-            ResultSet current = stmt.executeQuery("select position from renamestate where title='"+titleString+"'");
+            ResultSet current = stmt.executeQuery("select position from Arkansas_Queue where title='"+titleString+"'");
             int newnum = 0;
             int previous = 0;
             while(current.next()){
@@ -179,9 +176,9 @@ public class MovieQueue extends JPanel implements ListSelectionListener{
 	            previous = newnum;
 	            newnum = newnum + 1;
             }
-            stmt.executeUpdate( "update renamestate set position="+previous+" where position="+newnum);
-            stmt.executeUpdate( "update renamestate set position="+newnum+" where title='"+titleString+"'");
-            ResultSet rs = stmt.executeQuery( "select * from renamestate order by position" );
+            stmt.executeUpdate( "update Arkansas_Queue set position="+previous+" where position="+newnum);
+            stmt.executeUpdate( "update Arkansas_Queue set position="+newnum+" where title='"+titleString+"'");
+            ResultSet rs = stmt.executeQuery( "select * from Arkansas_Queue order by position" );
 
             while( rs.next() )
             {
@@ -204,8 +201,8 @@ public class MovieQueue extends JPanel implements ListSelectionListener{
         try{
             con = DriverManager.getConnection( "jdbc:mysql://localhost:3306/sakila", "root", "" );
             Statement stmt = con.createStatement();
-            stmt.executeUpdate( "delete from renamestate where title='"+titleString+"'");
-            ResultSet rs = stmt.executeQuery( "select * from renamestate order by position" );
+            stmt.executeUpdate( "delete from Arkansas_Queue where title='"+titleString+"'");
+            ResultSet rs = stmt.executeQuery( "select * from Arkansas_Queue order by position" );
 
             while( rs.next() )
             {

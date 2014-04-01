@@ -45,8 +45,7 @@ public class Movies extends JPanel implements ListSelectionListener {
             JPanel northPanelWithRemoveButton = new JPanel(new GridLayout(0,2));
             JLabel movieTitle = new JLabel(rs.getString("title"));
             northPanelWithAddButton.add(movieTitle);
-            JLabel movieTitleCopy = movieTitle;
-            northPanelWithRemoveButton.add(movieTitleCopy);
+            northPanelWithRemoveButton.add(movieTitle);
             Button addToQueue = new Button("Add to Queue");
             Button removeFromQueue = new Button("Remove from Queue");
             northPanelWithAddButton.add(addToQueue);
@@ -58,11 +57,11 @@ public class Movies extends JPanel implements ListSelectionListener {
     						try{
     							con = DriverManager.getConnection( "jdbc:mysql://localhost:3306/sakila", "root", "" );
     							Statement stmt = con.createStatement();
-    							ResultSet colcount = stmt.executeQuery("select count(title) from renamestate");
+    							ResultSet colcount = stmt.executeQuery("select count(title) from Arkansas_Queue");
     							colcount.next();
     							int number = colcount.getInt(1);
     							number = number + 1;
-    							stmt.executeUpdate( "insert into renamestate (position, title) values ("+number+" ,'"+title+"')" );
+    							stmt.executeUpdate( "insert into Arkansas_Queue (position, title) values ("+number+" ,'"+title+"')" );
 
     							stmt.close();
     							con.close();
@@ -85,7 +84,7 @@ public class Movies extends JPanel implements ListSelectionListener {
     						try{
     							con = DriverManager.getConnection( "jdbc:mysql://localhost:3306/sakila", "root", "" );
     							Statement stmt = con.createStatement();
-    							stmt.executeUpdate( "delete from renamestate where title='"+title+"'");
+    							stmt.executeUpdate( "delete from Arkansas_Queue where title='"+title+"'");
 
     							stmt.close();
     							con.close();
@@ -99,7 +98,7 @@ public class Movies extends JPanel implements ListSelectionListener {
     				}
     				);
             
-            ResultSet isMovieInQueue = stmt.executeQuery( "select * from renamestate where title='" + title + "'");
+            ResultSet isMovieInQueue = stmt.executeQuery( "select * from Arkansas_Queue where title='" + title + "'");
             
             if(!isMovieInQueue.isBeforeFirst()){
             	add(northPanelWithAddButton, BorderLayout.NORTH);
@@ -184,6 +183,7 @@ public class Movies extends JPanel implements ListSelectionListener {
         {
           e.printStackTrace();
         }
+        
 	}
 	
 	@Override
