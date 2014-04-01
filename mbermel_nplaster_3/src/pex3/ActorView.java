@@ -49,10 +49,10 @@ public class ActorView extends JPanel implements ListSelectionListener {
         add( new JScrollPane( list ), BorderLayout.CENTER );
 	}
 	
-	public void displayMovieInfo(int movieID){
+	public void displayActorInfo(int actorID){
 		removeAll();
-		JPanel movieInfo = new Movies(movieID);
-		add(movieInfo, BorderLayout.CENTER);
+		JPanel actor = new Actors(actorID);
+		add(actor, BorderLayout.CENTER);
 		revalidate();
 		repaint();
 	}

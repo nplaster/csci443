@@ -13,7 +13,7 @@ public class Home extends Applet{
 	protected  JPanel search;
 	protected  JPanel advancedSearch;
 	protected  JPanel movieQueue;
-	protected  JPanel actors;
+	protected static  ActorView actors;
 	protected static  MovieView movies;
 	public class LayoutStructure extends JFrame{
 		
@@ -72,6 +72,10 @@ public class Home extends Applet{
 	
 	public static MovieView getMovieJPanel(){
 		return movies;
+	}
+	
+	public static ActorView getActorJPanel(){
+		return actors;
 	}
 	
 	public void init(){
