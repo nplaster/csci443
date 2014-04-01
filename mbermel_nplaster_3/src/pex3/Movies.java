@@ -44,13 +44,11 @@ public class Movies extends JPanel implements ListSelectionListener {
             JPanel northPanelWithAddButton = new JPanel(new GridLayout(0,2));
             JPanel northPanelWithRemoveButton = new JPanel(new GridLayout(0,2));
             JLabel movieTitle = new JLabel(rs.getString("title"));
-            northPanelWithAddButton.add(movieTitle);
-            northPanelWithRemoveButton.add(movieTitle);
-            northPanelWithAddButton.add(movieTitle);
-            northPanelWithRemoveButton.add(movieTitle);
+            
+
             Button addToQueue = new Button("Add to Queue");
             Button removeFromQueue = new Button("Remove from Queue");
-            northPanelWithAddButton.add(addToQueue);
+            
             addToQueue.addActionListener(
     				new ActionListener() {
     					public void actionPerformed(ActionEvent event) {
@@ -75,7 +73,7 @@ public class Movies extends JPanel implements ListSelectionListener {
     					}
     				}
     				);
-            northPanelWithRemoveButton.add(removeFromQueue);
+            
             
             removeFromQueue.addActionListener(
     				new ActionListener() {
@@ -102,9 +100,13 @@ public class Movies extends JPanel implements ListSelectionListener {
             ResultSet isMovieInQueue = stmt.executeQuery( "select * from Arkansas_Queue where title='" + title + "'");
             
             if(!isMovieInQueue.isBeforeFirst()){
+            	northPanelWithAddButton.add(movieTitle);
+            	northPanelWithAddButton.add(addToQueue);
             	add(northPanelWithAddButton, BorderLayout.NORTH);
             }
             else{
+            	northPanelWithRemoveButton.add(movieTitle);
+            	northPanelWithRemoveButton.add(removeFromQueue);
             	add(northPanelWithRemoveButton, BorderLayout.NORTH);
             }
             
