@@ -39,15 +39,33 @@ public class Movies extends JPanel implements ListSelectionListener {
             ResultSet rs = stmt.executeQuery( "select * from film_text where film_id=" +movieID);
             rs.next();
             String title = rs.getString("title");
+            JPanel northPanelWithAddButton = new JPanel(new GridLayout(0,2));
+            JPanel northPanelWithRemoveButton = new JPanel(new GridLayout(0,2));
             JLabel movieTitle = new JLabel(rs.getString("title"));
-            add(movieTitle, BorderLayout.NORTH);
+            northPanelWithAddButton.add(movieTitle);
+            northPanelWithRemoveButton.add(movieTitle);
+            Button addToQueue = new Button("Add to Queue");
+            Button removeFromQueue = new Button("Remove from Queue");
+            northPanelWithAddButton.add(addToQueue);
+            northPanelWithRemoveButton.add(removeFromQueue);
+            
+            ResultSet isMovieInQueue = stmt.executeQuery( "select * from renamestate where title='" + title + "'");
+            
+            if(!isMovieInQueue.isBeforeFirst()){
+            	add(northPanelWithAddButton, BorderLayout.NORTH);
+            }
+            else{
+            	add(northPanelWithRemoveButton, BorderLayout.NORTH);
+            }
+            
+            rs = stmt.executeQuery("select * from film_list where title='" +title+ "'");
+            rs.next();
             JLabel description = new JLabel("Movie Description:");
             skeleton.add(description);
             JLabel movieDescription = new JLabel(rs.getString("description"));
             skeleton.add(movieDescription);
             
-            rs = stmt.executeQuery("select * from film_list where title='" +title+ "'");
-            rs.next();
+            
             String[] actorList = rs.getString("actors").replaceAll("^[,\\s]+", "").split(",");
             
             for(int i = 0; i<actorList.length; i++){
