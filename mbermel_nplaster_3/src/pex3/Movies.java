@@ -16,6 +16,8 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -43,7 +45,8 @@ public class Movies extends JPanel implements ListSelectionListener {
             JPanel northPanelWithRemoveButton = new JPanel(new GridLayout(0,2));
             JLabel movieTitle = new JLabel(rs.getString("title"));
             northPanelWithAddButton.add(movieTitle);
-            northPanelWithRemoveButton.add(movieTitle);
+            JLabel movieTitleCopy = movieTitle;
+            northPanelWithRemoveButton.add(movieTitleCopy);
             Button addToQueue = new Button("Add to Queue");
             Button removeFromQueue = new Button("Remove from Queue");
             northPanelWithAddButton.add(addToQueue);
@@ -62,14 +65,17 @@ public class Movies extends JPanel implements ListSelectionListener {
             rs.next();
             JLabel description = new JLabel("Movie Description:");
             skeleton.add(description);
-            JLabel movieDescription = new JLabel(rs.getString("description"));
+            JTextArea movieDescription = new JTextArea(rs.getString("description"));
+            movieDescription.setEditable(false);
+            movieDescription.setLineWrap(true);
             skeleton.add(movieDescription);
             
             
             String[] actorList = rs.getString("actors").replaceAll("^[,\\s]+", "").split(",");
             
             for(int i = 0; i<actorList.length; i++){
-            	listModel.addElement(actorList[i]);
+            	String trimmedActorsName = actorList[i].replaceAll("^[,\\s]+", "");
+            	listModel.addElement(trimmedActorsName);
             }
             
             list = new JList<String>(listModel);

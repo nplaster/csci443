@@ -16,6 +16,8 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -42,7 +44,9 @@ public class Actors extends JPanel implements ListSelectionListener {
             add(actorName, BorderLayout.NORTH);
             JLabel movieList = new JLabel("Movies Played In");
             skeleton.add(movieList);
-            JLabel moviesPlayedIn = new JLabel(rs.getString("film_info"));
+            JTextArea moviesPlayedIn = new JTextArea(rs.getString("film_info"));
+            moviesPlayedIn.setEditable(false);
+            moviesPlayedIn.setLineWrap(true);
             skeleton.add(moviesPlayedIn);
             
             rs.close();
