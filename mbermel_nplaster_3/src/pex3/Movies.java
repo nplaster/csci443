@@ -46,13 +46,14 @@ public class Movies extends JPanel implements ListSelectionListener {
             JLabel movieTitle = new JLabel(rs.getString("title"));
             northPanelWithAddButton.add(movieTitle);
             northPanelWithRemoveButton.add(movieTitle);
+            northPanelWithAddButton.add(movieTitle);
+            northPanelWithRemoveButton.add(movieTitle);
             Button addToQueue = new Button("Add to Queue");
             Button removeFromQueue = new Button("Remove from Queue");
             northPanelWithAddButton.add(addToQueue);
             addToQueue.addActionListener(
     				new ActionListener() {
     					public void actionPerformed(ActionEvent event) {
-    						// Clear the list model so that it ONLY shows the new results set.
     						java.sql.Connection con;
     						try{
     							con = DriverManager.getConnection( "jdbc:mysql://localhost:3306/sakila", "root", "" );
