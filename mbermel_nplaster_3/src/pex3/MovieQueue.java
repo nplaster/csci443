@@ -237,7 +237,6 @@ public class MovieQueue extends JPanel implements ListSelectionListener {
 
 	@Override
 	public void valueChanged(ListSelectionEvent e) {
-		// TODO Auto-generated method stub
 
 	}
 
