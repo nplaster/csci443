@@ -1,9 +1,7 @@
-import java.awt.List;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
 
 
@@ -61,6 +59,7 @@ public class Translator {
 	    }
 	    System.out.println(res.toString());
 		return res;
+		
 	}
 	
 	public static void main(String args[]) throws FileNotFoundException{
