@@ -6,6 +6,7 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -19,8 +20,10 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.HashMap;
 
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -33,6 +36,7 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingUtilities;
+import javax.swing.UIManager;
 
 public class SimpleChat implements ActionListener
 {
@@ -46,9 +50,11 @@ public class SimpleChat implements ActionListener
   private Thread listener;
 
   private JFrame frame;
+  private JPanel ticTacToeGrid;
   private JTextArea messageArea;
   private JTextField messageField;
   private String myUsername, theirUsername;
+  private HashMap<String,JButton> buttonCache = new HashMap<String, JButton>();
 
   public SimpleChat()
   {
@@ -67,6 +73,22 @@ public class SimpleChat implements ActionListener
     this.messageArea.setEditable( false );
     this.messageArea.setLineWrap( true );
     this.messageArea.setWrapStyleWord( true );
+    
+    this.ticTacToeGrid = new JPanel(new GridLayout(3,3));
+    this.ticTacToeGrid.setSize(20, 40);
+    JButton testButton = new JButton();
+    testButton.addActionListener(new buttonListener());
+    this.ticTacToeGrid.add(testButton);
+//    for(int i = 0; i<9; i++){
+//    	JButton button = new JButton();
+//    	button.setSize(40, 40);
+//    	button.addActionListener(new buttonListener());
+//    	this.ticTacToeGrid.add(button);
+//    	
+//    	
+//    	String command = Integer.toString(i);
+//    	buttonCache.put(command, button);    	
+//    }
 
     // A single-line, editable, text area to type new messages.
     this.messageField = new JTextField( 40 );
@@ -74,10 +96,10 @@ public class SimpleChat implements ActionListener
     this.messageField.addActionListener( this );
     
     JPanel panel = new JPanel();
-    panel.setBackground( Color.WHITE );
-    panel.setBorder( BorderFactory.createTitledBorder( "Messages" ) );
-    panel.add( new JScrollPane( this.messageArea, ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS, ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER ) );
-    this.frame.add( panel, BorderLayout.CENTER );
+//    panel.setBackground( Color.WHITE );
+//    panel.setBorder( BorderFactory.createTitledBorder( "Messages" ) );
+//    panel.add( this.ticTacToeGrid );
+    this.frame.add( this.ticTacToeGrid, BorderLayout.CENTER );
     
     panel = new JPanel();
     panel.setBackground( Color.WHITE );
@@ -127,6 +149,29 @@ public class SimpleChat implements ActionListener
     
     return fileMenu;
   }
+  
+  private class buttonListener implements ActionListener{
+
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		String command = ((JButton) e.getSource()).getActionCommand();
+		JButton button = buttonCache.get(command);
+		System.out.println(command);
+		System.out.println("fuck");
+		if(button != null){
+			switch(command){
+			case "0":
+				button.setLabel("X");
+				break;
+			default:
+				System.out.println("lol");
+			}
+		}
+	}
+  }
+	  
+  
   
   private class FileMenuListener implements ActionListener
   {
