@@ -20,8 +20,11 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
+import javax.swing.AbstractButton;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -54,7 +57,10 @@ public class SimpleChat implements ActionListener
   private JTextArea messageArea;
   private JTextField messageField;
   private String myUsername, theirUsername;
-  private HashMap<String,JButton> buttonCache = new HashMap<String, JButton>();
+  private JButton buttonZero, buttonOne, buttonTwo, buttonThree, buttonFour, buttonFive,
+  buttonSix, buttonSeven, buttonEight, buttonNine;
+  private ArrayList<JButton> buttonList = new ArrayList<JButton>(Arrays.asList(buttonZero, buttonOne, buttonTwo, buttonThree, buttonFour, buttonFive,
+		  buttonSix, buttonSeven, buttonEight));;
 
   public SimpleChat()
   {
@@ -76,9 +82,16 @@ public class SimpleChat implements ActionListener
     
     this.ticTacToeGrid = new JPanel(new GridLayout(3,3));
     this.ticTacToeGrid.setSize(20, 40);
-    JButton testButton = new JButton();
-    testButton.addActionListener(new buttonListener());
-    this.ticTacToeGrid.add(testButton);
+//    buttonOne.addActionListener(new buttonListener());
+//    this.ticTacToeGrid.add(buttonOne);
+    int buttonCount = 0;
+    for(JButton b : buttonList){
+    	b = new JButton();
+    	b.setActionCommand(Integer.toString(buttonCount));
+    	buttonCount++;
+    	b.addActionListener(new buttonListener());
+    	this.ticTacToeGrid.add(b);
+    }
 //    for(int i = 0; i<9; i++){
 //    	JButton button = new JButton();
 //    	button.setSize(40, 40);
@@ -155,18 +168,12 @@ public class SimpleChat implements ActionListener
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		String command = ((JButton) e.getSource()).getActionCommand();
-		JButton button = buttonCache.get(command);
-		System.out.println(command);
-		System.out.println("fuck");
-		if(button != null){
-			switch(command){
-			case "0":
-				button.setLabel("X");
-				break;
-			default:
-				System.out.println("lol");
-			}
+		if(e.getActionCommand().equals("0")){
+			((AbstractButton) e.getSource()).setText("X");
+		}
+		else{
+			System.out.println(e.getSource());
+			((AbstractButton) e.getSource()).setText("O");
 		}
 	}
   }
