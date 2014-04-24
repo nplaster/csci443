@@ -114,6 +114,64 @@ public class TicTacToe implements ActionListener
 
 				this.messageField.requestFocus();
 			}
+			
+			public boolean checkIfSpaceEmpty(int buttonID){
+				String currentStatus = buttonList.get(buttonID).getText();
+				if(currentStatus.equals("")){
+					return true;
+				}
+				return false;
+			}
+			
+			public boolean checkForWin(){
+				
+				
+				//check rows
+				for(int i = 0; i < 9; i+=3){
+					for(int j = i; j<i+3; j++){
+						if(isServer && buttonList.get(j).getText() == "X"){
+							if(j==i+2)
+								return true;
+							
+							continue;
+						}
+						else if(!isServer && buttonList.get(j).getText() == "O"){
+							if(j==i+2)
+								return true;
+							
+							continue;
+						}
+						
+					}
+				}
+				
+				//check columns
+				for(int i = 0; i < 3; i++){
+					for(int j = i; j<9; j+=3){
+						if(isServer && buttonList.get(j).getText() == "X"){
+							if(j==i+6)
+								return true;
+							continue;
+						}
+						else if(!isServer && buttonList.get(j).getText() == "O"){
+							if(j==i+6)
+								return true;
+							continue;
+						}
+					}
+				}
+				
+				//check diagonals
+				if(buttonList.get(0).getText() == buttonList.get(5).getText() && buttonList.get(5).getText() == buttonList.get(9).getText()){
+					return true;
+				}
+				else if(buttonList.get(3).getText() == buttonList.get(5).getText() && buttonList.get(5).getText() == buttonList.get(6).getText()){
+					return true;
+				}
+				
+				return false;
+				
+			}
 
 			private JMenu createFileMenu()
 			{
@@ -133,13 +191,6 @@ public class TicTacToe implements ActionListener
 				fileMenu.add( menuItem );
 
 				fileMenu.addSeparator();
-
-				menuItem = new JMenuItem( "Save Chat...", KeyEvent.VK_S );
-				menuItem.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_S, ActionEvent.CTRL_MASK ) );
-				menuItem.addActionListener( listener );
-				fileMenu.add( menuItem );
-
-				fileMenu.addSeparator();
 				menuItem = new JMenuItem( "Exit", KeyEvent.VK_X );
 				menuItem.addActionListener( listener );
 				fileMenu.add( menuItem );
@@ -152,98 +203,100 @@ public class TicTacToe implements ActionListener
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					if(e.getActionCommand().equals("0")){
-						if(isServer){
-							((AbstractButton) e.getSource()).setText("X");
-							sender.sendMessage("0");
+					if(checkIfSpaceEmpty(Integer.parseInt(e.getActionCommand()))){
+						if(e.getActionCommand().equals("0")){
+							if(isServer){
+								((AbstractButton) e.getSource()).setText("X");
+								sender.sendMessage("0");
+							}
+							else{
+								((AbstractButton) e.getSource()).setText("O");
+								sender.sendMessage("0");
+							}
+						}
+						else if(e.getActionCommand().equals("1")){
+							if(isServer){
+								((AbstractButton) e.getSource()).setText("X");
+								sender.sendMessage("1");
+							}
+							else{
+								((AbstractButton) e.getSource()).setText("O");
+								sender.sendMessage("1");
+							}
+						}
+						else if(e.getActionCommand().equals("2")){
+							if(isServer){
+								((AbstractButton) e.getSource()).setText("X");
+								sender.sendMessage("2");
+							}
+							else{
+								((AbstractButton) e.getSource()).setText("O");
+								sender.sendMessage("2");
+							}
+						}
+						else if(e.getActionCommand().equals("3")){
+							if(isServer){
+								((AbstractButton) e.getSource()).setText("X");
+								sender.sendMessage("3");
+							}
+							else{
+								((AbstractButton) e.getSource()).setText("O");
+								sender.sendMessage("3");
+							}
+						}
+						else if(e.getActionCommand().equals("4")){
+							if(isServer){
+								((AbstractButton) e.getSource()).setText("X");
+								sender.sendMessage("4");
+							}
+							else{
+								((AbstractButton) e.getSource()).setText("O");
+								sender.sendMessage("4");
+							}
+						}
+						else if(e.getActionCommand().equals("5")){
+							if(isServer){
+								((AbstractButton) e.getSource()).setText("X");
+								sender.sendMessage("5");
+							}
+							else{
+								((AbstractButton) e.getSource()).setText("O");
+								sender.sendMessage("5");
+							}
+						}
+						else if(e.getActionCommand().equals("6")){
+							if(isServer){
+								((AbstractButton) e.getSource()).setText("X");
+								sender.sendMessage("6");
+							}
+							else{
+								((AbstractButton) e.getSource()).setText("O");
+								sender.sendMessage("6");
+							}
+						}
+						else if(e.getActionCommand().equals("7")){
+							if(isServer){
+								((AbstractButton) e.getSource()).setText("X");
+								sender.sendMessage("7");
+							}
+							else{
+								((AbstractButton) e.getSource()).setText("O");
+								sender.sendMessage("7");
+							}
+						}
+						else if(e.getActionCommand().equals("8")){
+							if(isServer){
+								((AbstractButton) e.getSource()).setText("X");
+								sender.sendMessage("8");
+							}
+							else{
+								((AbstractButton) e.getSource()).setText("O");
+								sender.sendMessage("8");
+							}
 						}
 						else{
-							((AbstractButton) e.getSource()).setText("O");
-							sender.sendMessage("0");
+							System.err.print("Unknown Button Error");
 						}
-					}
-					else if(e.getActionCommand().equals("1")){
-						if(isServer){
-							((AbstractButton) e.getSource()).setText("X");
-							sender.sendMessage("1");
-						}
-						else{
-							((AbstractButton) e.getSource()).setText("O");
-							sender.sendMessage("1");
-						}
-					}
-					else if(e.getActionCommand().equals("2")){
-						if(isServer){
-							((AbstractButton) e.getSource()).setText("X");
-							sender.sendMessage("2");
-						}
-						else{
-							((AbstractButton) e.getSource()).setText("O");
-							sender.sendMessage("2");
-						}
-					}
-					else if(e.getActionCommand().equals("3")){
-						if(isServer){
-							((AbstractButton) e.getSource()).setText("X");
-							sender.sendMessage("3");
-						}
-						else{
-							((AbstractButton) e.getSource()).setText("O");
-							sender.sendMessage("3");
-						}
-					}
-					else if(e.getActionCommand().equals("4")){
-						if(isServer){
-							((AbstractButton) e.getSource()).setText("X");
-							sender.sendMessage("4");
-						}
-						else{
-							((AbstractButton) e.getSource()).setText("O");
-							sender.sendMessage("4");
-						}
-					}
-					else if(e.getActionCommand().equals("5")){
-						if(isServer){
-							((AbstractButton) e.getSource()).setText("X");
-							sender.sendMessage("5");
-						}
-						else{
-							((AbstractButton) e.getSource()).setText("O");
-							sender.sendMessage("5");
-						}
-					}
-					else if(e.getActionCommand().equals("6")){
-						if(isServer){
-							((AbstractButton) e.getSource()).setText("X");
-							sender.sendMessage("6");
-						}
-						else{
-							((AbstractButton) e.getSource()).setText("O");
-							sender.sendMessage("6");
-						}
-					}
-					else if(e.getActionCommand().equals("7")){
-						if(isServer){
-							((AbstractButton) e.getSource()).setText("X");
-							sender.sendMessage("7");
-						}
-						else{
-							((AbstractButton) e.getSource()).setText("O");
-							sender.sendMessage("7");
-						}
-					}
-					else if(e.getActionCommand().equals("8")){
-						if(isServer){
-							((AbstractButton) e.getSource()).setText("X");
-							sender.sendMessage("8");
-						}
-						else{
-							((AbstractButton) e.getSource()).setText("O");
-							sender.sendMessage("8");
-						}
-					}
-					else{
-						System.err.print("Unknown Button Error");
 					}
 				}
 			}
