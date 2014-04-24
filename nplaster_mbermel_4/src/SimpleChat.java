@@ -175,6 +175,7 @@ public class SimpleChat implements ActionListener
 						}
 						else{
 							((AbstractButton) e.getSource()).setText("O");
+							sender.sendMessage("1");
 						}
 					}
 					else if(e.getActionCommand().equals("2")){
@@ -184,6 +185,7 @@ public class SimpleChat implements ActionListener
 						}
 						else{
 							((AbstractButton) e.getSource()).setText("O");
+							sender.sendMessage("2");
 						}
 					}
 					else if(e.getActionCommand().equals("3")){
@@ -193,6 +195,7 @@ public class SimpleChat implements ActionListener
 						}
 						else{
 							((AbstractButton) e.getSource()).setText("O");
+							sender.sendMessage("3");
 						}
 					}
 					else if(e.getActionCommand().equals("4")){
@@ -202,6 +205,7 @@ public class SimpleChat implements ActionListener
 						}
 						else{
 							((AbstractButton) e.getSource()).setText("O");
+							sender.sendMessage("4");
 						}
 					}
 					else if(e.getActionCommand().equals("5")){
@@ -211,6 +215,7 @@ public class SimpleChat implements ActionListener
 						}
 						else{
 							((AbstractButton) e.getSource()).setText("O");
+							sender.sendMessage("5");
 						}
 					}
 					else if(e.getActionCommand().equals("6")){
@@ -220,6 +225,7 @@ public class SimpleChat implements ActionListener
 						}
 						else{
 							((AbstractButton) e.getSource()).setText("O");
+							sender.sendMessage("6");
 						}
 					}
 					else if(e.getActionCommand().equals("7")){
@@ -229,6 +235,7 @@ public class SimpleChat implements ActionListener
 						}
 						else{
 							((AbstractButton) e.getSource()).setText("O");
+							sender.sendMessage("7");
 						}
 					}
 					else if(e.getActionCommand().equals("8")){
@@ -238,6 +245,7 @@ public class SimpleChat implements ActionListener
 						}
 						else{
 							((AbstractButton) e.getSource()).setText("O");
+							sender.sendMessage("8");
 						}
 					}
 					else{
