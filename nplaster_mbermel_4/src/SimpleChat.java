@@ -519,9 +519,20 @@ public class SimpleChat implements ActionListener
 						{
 							message = in.readLine();
 							System.out.println("Client message: '" +message+ "'");
-							if(message.equals("0")){
-								SimpleChat.buttonList.get(0).setText("X");
+							int value = Integer.parseInt(message);
+							switch(value){
+							case 0: SimpleChat.buttonList.get(0).setText("X"); break;
+							case 1: SimpleChat.buttonList.get(1).setText("X"); break;
+							case 2: SimpleChat.buttonList.get(2).setText("X"); break;
+							case 3: SimpleChat.buttonList.get(3).setText("X"); break;
+							case 4: SimpleChat.buttonList.get(4).setText("X"); break;
+							case 5: SimpleChat.buttonList.get(5).setText("X"); break;
+							case 6: SimpleChat.buttonList.get(6).setText("X"); break;
+							case 7: SimpleChat.buttonList.get(7).setText("X"); break;
+							case 8: SimpleChat.buttonList.get(8).setText("X"); break;
+							
 							}
+	
 						}
 						while( !message.equalsIgnoreCase( "GoodBye" ) );
 
