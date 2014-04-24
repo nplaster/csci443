@@ -60,24 +60,24 @@ public class SimpleChat implements ActionListener
 	private String myUsername, theirUsername;
 	private static JButton buttonZero;
 
-	private JButton buttonOne;
+	private static JButton buttonOne;
 
-	private JButton buttonTwo;
+	private static JButton buttonTwo;
 
-	private JButton buttonThree;
+	private static JButton buttonThree;
 
-	private JButton buttonFour;
+	private static JButton buttonFour;
 
-	private JButton buttonFive;
+	private static JButton buttonFive;
 
-	private JButton buttonSix;
+	private static JButton buttonSix;
 
-	private JButton buttonSeven;
+	private static JButton buttonSeven;
 
-	private JButton buttonEight;
+	private static JButton buttonEight;
 
 	private JButton buttonNine;
-	private ArrayList<JButton> buttonList = new ArrayList<JButton>(Arrays.asList(buttonZero, buttonOne, buttonTwo, buttonThree, buttonFour, buttonFive,
+	private static ArrayList<JButton> buttonList = new ArrayList<JButton>(Arrays.asList(buttonZero, buttonOne, buttonTwo, buttonThree, buttonFour, buttonFive,
 			buttonSix, buttonSeven, buttonEight));;
 	private static boolean isServer = false;
 	private static int buttonCount = 0;
@@ -439,15 +439,14 @@ public class SimpleChat implements ActionListener
 						e.printStackTrace();
 						System.exit( 1 );
 					}
-
 					try( ServerSocket serverSocket = new ServerSocket( PORT );
 							Socket clientSocket = serverSocket.accept();  // Blocks until a connection is made.
+							
 							BufferedReader in = new BufferedReader( new InputStreamReader( clientSocket.getInputStream() ) );
 							PrintWriter out = new PrintWriter( clientSocket.getOutputStream(), true ); )
 							{
 						// Save a reference to the output connection for use by sendMessage method.
 						this.output = out;
-
 						// Exchange user names.
 						theirUsername = in.readLine();
 
@@ -525,6 +524,7 @@ public class SimpleChat implements ActionListener
 							{
 						// Save a reference to the output connection for use by sendMessage method.
 						this.output = out;
+						System.out.println(this.output.toString());
 
 						// Exchange user names.
 						out.println( myUsername );
@@ -539,9 +539,11 @@ public class SimpleChat implements ActionListener
 						do
 						{
 							message = in.readLine();
+							System.out.println("Client message: '" +message+ "'");
 							if(message.equals("0")){
 								SimpleChat.buttonZero = new JButton();
 								SimpleChat.buttonZero.setText("X");
+								SimpleChat.buttonList.get(0).setText("X");
 								System.out.println(SimpleChat.buttonCount);
 							}
 						}
