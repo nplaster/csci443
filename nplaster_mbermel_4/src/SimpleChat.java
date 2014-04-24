@@ -165,6 +165,7 @@ public class SimpleChat implements ActionListener
 						}
 						else{
 							((AbstractButton) e.getSource()).setText("O");
+							sender.sendMessage("0");
 						}
 					}
 					else if(e.getActionCommand().equals("1")){
