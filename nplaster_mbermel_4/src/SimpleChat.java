@@ -58,27 +58,8 @@ public class SimpleChat implements ActionListener
 	private JTextArea messageArea;
 	private JTextField messageField;
 	private String myUsername, theirUsername;
-	private static JButton buttonZero;
 
-	private static JButton buttonOne;
-
-	private static JButton buttonTwo;
-
-	private static JButton buttonThree;
-
-	private static JButton buttonFour;
-
-	private static JButton buttonFive;
-
-	private static JButton buttonSix;
-
-	private static JButton buttonSeven;
-
-	private static JButton buttonEight;
-
-	private JButton buttonNine;
-	private static ArrayList<JButton> buttonList = new ArrayList<JButton>(Arrays.asList(buttonZero, buttonOne, buttonTwo, buttonThree, buttonFour, buttonFive,
-			buttonSix, buttonSeven, buttonEight));;
+	private static ArrayList<JButton> buttonList = new ArrayList<JButton>();
 	private static boolean isServer = false;
 	private static int buttonCount = 0;
 
@@ -105,15 +86,13 @@ public class SimpleChat implements ActionListener
 				//    buttonOne.addActionListener(new buttonListener());
 				//    this.ticTacToeGrid.add(buttonOne);
 				
-				for(JButton b : buttonList){
-					b = new JButton();
+				for(int i = 0; i< 9; i++){
+					JButton b = new JButton();
 					b.setActionCommand(Integer.toString(buttonCount));
 					buttonCount++;
 					b.addActionListener(new buttonListener());
-					//b.setText("Fuck");
-					b.setPreferredSize(new Dimension(20,20));
-					b.setSize(20, 20);
-					this.ticTacToeGrid.add(b);
+					buttonList.add(b);
+					this.ticTacToeGrid.add(buttonList.get(i));
 				}
 
 				// A single-line, editable, text area to type new messages.
@@ -461,7 +440,7 @@ public class SimpleChat implements ActionListener
 							message = in.readLine();  // Blocks until a message is received.
 							System.out.println("This is the message: '" +message+ "'");
 							if(message.equals("0")){
-								SimpleChat.buttonZero.setText("O");
+								SimpleChat.buttonList.get(0).setText("O");
 							}
 						}
 						while( !message.equalsIgnoreCase( "GoodBye" ) );
@@ -541,10 +520,7 @@ public class SimpleChat implements ActionListener
 							message = in.readLine();
 							System.out.println("Client message: '" +message+ "'");
 							if(message.equals("0")){
-								SimpleChat.buttonZero = new JButton();
-								SimpleChat.buttonZero.setText("X");
 								SimpleChat.buttonList.get(0).setText("X");
-								System.out.println(SimpleChat.buttonCount);
 							}
 						}
 						while( !message.equalsIgnoreCase( "GoodBye" ) );
