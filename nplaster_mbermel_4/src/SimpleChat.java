@@ -164,6 +164,7 @@ public class SimpleChat implements ActionListener
 					if(e.getActionCommand().equals("0")){
 						if(isServer){
 							((AbstractButton) e.getSource()).setText("X");
+							server.sendMessage("0");
 						}
 						else{
 							((AbstractButton) e.getSource()).setText("O");
@@ -172,6 +173,7 @@ public class SimpleChat implements ActionListener
 					else if(e.getActionCommand().equals("1")){
 						if(isServer){
 							((AbstractButton) e.getSource()).setText("X");
+							server.sendMessage("1");
 						}
 						else{
 							((AbstractButton) e.getSource()).setText("O");
@@ -180,6 +182,7 @@ public class SimpleChat implements ActionListener
 					else if(e.getActionCommand().equals("2")){
 						if(isServer){
 							((AbstractButton) e.getSource()).setText("X");
+							server.sendMessage("2");
 						}
 						else{
 							((AbstractButton) e.getSource()).setText("O");
@@ -188,6 +191,7 @@ public class SimpleChat implements ActionListener
 					else if(e.getActionCommand().equals("3")){
 						if(isServer){
 							((AbstractButton) e.getSource()).setText("X");
+							server.sendMessage("3");
 						}
 						else{
 							((AbstractButton) e.getSource()).setText("O");
@@ -196,6 +200,7 @@ public class SimpleChat implements ActionListener
 					else if(e.getActionCommand().equals("4")){
 						if(isServer){
 							((AbstractButton) e.getSource()).setText("X");
+							server.sendMessage("4");
 						}
 						else{
 							((AbstractButton) e.getSource()).setText("O");
@@ -204,6 +209,7 @@ public class SimpleChat implements ActionListener
 					else if(e.getActionCommand().equals("5")){
 						if(isServer){
 							((AbstractButton) e.getSource()).setText("X");
+							server.sendMessage("5");
 						}
 						else{
 							((AbstractButton) e.getSource()).setText("O");
@@ -212,6 +218,7 @@ public class SimpleChat implements ActionListener
 					else if(e.getActionCommand().equals("6")){
 						if(isServer){
 							((AbstractButton) e.getSource()).setText("X");
+							server.sendMessage("6");
 						}
 						else{
 							((AbstractButton) e.getSource()).setText("O");
@@ -220,6 +227,7 @@ public class SimpleChat implements ActionListener
 					else if(e.getActionCommand().equals("7")){
 						if(isServer){
 							((AbstractButton) e.getSource()).setText("X");
+							server.sendMessage("7");
 						}
 						else{
 							((AbstractButton) e.getSource()).setText("O");
@@ -228,6 +236,7 @@ public class SimpleChat implements ActionListener
 					else if(e.getActionCommand().equals("8")){
 						if(isServer){
 							((AbstractButton) e.getSource()).setText("X");
+							server.sendMessage("8");
 						}
 						else{
 							((AbstractButton) e.getSource()).setText("O");
@@ -487,7 +496,7 @@ public class SimpleChat implements ActionListener
 							System.exit( 1 );
 						}
 					}
-					messages.append( "Connecting to " + ip + " ...\n" );
+					//messages.append( "Connecting to " + ip + " ...\n" );
 
 					try( Socket clientSocket = new Socket( ip, PORT );
 							BufferedReader in = new BufferedReader( new InputStreamReader( clientSocket.getInputStream() ) );
@@ -509,8 +518,8 @@ public class SimpleChat implements ActionListener
 						String message;
 						do
 						{
-							message = in.readLine();  // Blocks until a message is received.
-							messages.append( theirUsername + ": " + message + "\n" );
+							message = in.readLine();
+							System.out.println(message);
 						}
 						while( !message.equalsIgnoreCase( "GoodBye" ) );
 
