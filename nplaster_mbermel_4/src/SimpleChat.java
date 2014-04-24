@@ -58,11 +58,29 @@ public class SimpleChat implements ActionListener
 	private JTextArea messageArea;
 	private JTextField messageField;
 	private String myUsername, theirUsername;
-	private JButton buttonZero, buttonOne, buttonTwo, buttonThree, buttonFour, buttonFive,
-	buttonSix, buttonSeven, buttonEight, buttonNine;
+	private static JButton buttonZero;
+
+	private JButton buttonOne;
+
+	private JButton buttonTwo;
+
+	private JButton buttonThree;
+
+	private JButton buttonFour;
+
+	private JButton buttonFive;
+
+	private JButton buttonSix;
+
+	private JButton buttonSeven;
+
+	private JButton buttonEight;
+
+	private JButton buttonNine;
 	private ArrayList<JButton> buttonList = new ArrayList<JButton>(Arrays.asList(buttonZero, buttonOne, buttonTwo, buttonThree, buttonFour, buttonFive,
 			buttonSix, buttonSeven, buttonEight));;
 	private static boolean isServer = false;
+	private static int buttonCount = 0;
 
 			public SimpleChat()
 			{
@@ -86,7 +104,7 @@ public class SimpleChat implements ActionListener
 				this.ticTacToeGrid = new JPanel(new GridLayout(3,3));
 				//    buttonOne.addActionListener(new buttonListener());
 				//    this.ticTacToeGrid.add(buttonOne);
-				int buttonCount = 0;
+				
 				for(JButton b : buttonList){
 					b = new JButton();
 					b.setActionCommand(Integer.toString(buttonCount));
@@ -164,7 +182,7 @@ public class SimpleChat implements ActionListener
 					if(e.getActionCommand().equals("0")){
 						if(isServer){
 							((AbstractButton) e.getSource()).setText("X");
-							server.sendMessage("0");
+							sender.sendMessage("0");
 						}
 						else{
 							((AbstractButton) e.getSource()).setText("O");
@@ -173,7 +191,7 @@ public class SimpleChat implements ActionListener
 					else if(e.getActionCommand().equals("1")){
 						if(isServer){
 							((AbstractButton) e.getSource()).setText("X");
-							server.sendMessage("1");
+							sender.sendMessage("1");
 						}
 						else{
 							((AbstractButton) e.getSource()).setText("O");
@@ -182,7 +200,7 @@ public class SimpleChat implements ActionListener
 					else if(e.getActionCommand().equals("2")){
 						if(isServer){
 							((AbstractButton) e.getSource()).setText("X");
-							server.sendMessage("2");
+							sender.sendMessage("2");
 						}
 						else{
 							((AbstractButton) e.getSource()).setText("O");
@@ -191,7 +209,7 @@ public class SimpleChat implements ActionListener
 					else if(e.getActionCommand().equals("3")){
 						if(isServer){
 							((AbstractButton) e.getSource()).setText("X");
-							server.sendMessage("3");
+							sender.sendMessage("3");
 						}
 						else{
 							((AbstractButton) e.getSource()).setText("O");
@@ -200,7 +218,7 @@ public class SimpleChat implements ActionListener
 					else if(e.getActionCommand().equals("4")){
 						if(isServer){
 							((AbstractButton) e.getSource()).setText("X");
-							server.sendMessage("4");
+							sender.sendMessage("4");
 						}
 						else{
 							((AbstractButton) e.getSource()).setText("O");
@@ -209,7 +227,7 @@ public class SimpleChat implements ActionListener
 					else if(e.getActionCommand().equals("5")){
 						if(isServer){
 							((AbstractButton) e.getSource()).setText("X");
-							server.sendMessage("5");
+							sender.sendMessage("5");
 						}
 						else{
 							((AbstractButton) e.getSource()).setText("O");
@@ -218,7 +236,7 @@ public class SimpleChat implements ActionListener
 					else if(e.getActionCommand().equals("6")){
 						if(isServer){
 							((AbstractButton) e.getSource()).setText("X");
-							server.sendMessage("6");
+							sender.sendMessage("6");
 						}
 						else{
 							((AbstractButton) e.getSource()).setText("O");
@@ -227,7 +245,7 @@ public class SimpleChat implements ActionListener
 					else if(e.getActionCommand().equals("7")){
 						if(isServer){
 							((AbstractButton) e.getSource()).setText("X");
-							server.sendMessage("7");
+							sender.sendMessage("7");
 						}
 						else{
 							((AbstractButton) e.getSource()).setText("O");
@@ -236,7 +254,7 @@ public class SimpleChat implements ActionListener
 					else if(e.getActionCommand().equals("8")){
 						if(isServer){
 							((AbstractButton) e.getSource()).setText("X");
-							server.sendMessage("8");
+							sender.sendMessage("8");
 						}
 						else{
 							((AbstractButton) e.getSource()).setText("O");
@@ -399,11 +417,13 @@ public class SimpleChat implements ActionListener
 				public SimpleChatServer( JTextArea messages )
 				{
 					this.messages = messages;
+					
 					SimpleChat.isServer = true;
 				}
 
 				public void sendMessage( String message )
 				{
+					System.out.println("The server is sending: '" +message+ "'");
 					this.output.println( message );
 				}
 
@@ -430,8 +450,6 @@ public class SimpleChat implements ActionListener
 
 						// Exchange user names.
 						theirUsername = in.readLine();
-						out.println( myUsername );
-						messages.append( "Connected to " + theirUsername + ".\n" );
 
 						// Enable the message JTextField so it looks like things are ready to go.
 						messageField.setEnabled( true );
@@ -442,7 +460,10 @@ public class SimpleChat implements ActionListener
 						do
 						{
 							message = in.readLine();  // Blocks until a message is received.
-							messages.append( theirUsername + ": " + message + "\n" );
+							System.out.println("This is the message: '" +message+ "'");
+							if(message.equals("0")){
+								SimpleChat.buttonZero.setText("O");
+							}
 						}
 						while( !message.equalsIgnoreCase( "GoodBye" ) );
 
@@ -507,8 +528,7 @@ public class SimpleChat implements ActionListener
 
 						// Exchange user names.
 						out.println( myUsername );
-						theirUsername = in.readLine();
-						messages.append( "Connected to " + theirUsername + ".\n" );
+
 
 						// Enable the message JTextField so it looks like things are ready to go.
 						messageField.setEnabled( true );
@@ -519,7 +539,11 @@ public class SimpleChat implements ActionListener
 						do
 						{
 							message = in.readLine();
-							System.out.println(message);
+							if(message.equals("0")){
+								SimpleChat.buttonZero = new JButton();
+								SimpleChat.buttonZero.setText("X");
+								System.out.println(SimpleChat.buttonCount);
+							}
 						}
 						while( !message.equalsIgnoreCase( "GoodBye" ) );
 
