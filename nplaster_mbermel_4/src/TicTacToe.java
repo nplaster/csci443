@@ -46,7 +46,7 @@ public class TicTacToe implements ActionListener
 {
 	// Somewhat arbitrary, but see the section titled Understanding Ports:
 	// http://docs.oracle.com/javase/tutorial/networking/overview/networking.html
-	private static final int PORT = 51042;
+	private static final int PORT = 51041;
 
 	private TicTacToeServer server;
 	private TicTacToeClient client;
@@ -62,6 +62,7 @@ public class TicTacToe implements ActionListener
 	private static ArrayList<JButton> buttonList = new ArrayList<JButton>();
 	private static boolean isServer = false;
 	private static int buttonCount = 0;
+	private static boolean myTurn = true;
 
 			public TicTacToe()
 			{
@@ -130,18 +131,20 @@ public class TicTacToe implements ActionListener
 				for(int i = 0; i < 9; i+=3){
 					for(int j = i; j<i+3; j++){
 						if(isServer && buttonList.get(j).getText() == "X"){
-							if(j==i+2)
+							if(j==i+2){
+								System.out.println("elizabeth");
 								return true;
-							
+							}
 							continue;
-						}
+						}						
 						else if(!isServer && buttonList.get(j).getText() == "O"){
-							if(j==i+2)
+							if(j==i+2){
+								System.out.println("two");
 								return true;
-							
+							}
 							continue;
 						}
-						
+						break;
 					}
 				}
 				
@@ -149,23 +152,30 @@ public class TicTacToe implements ActionListener
 				for(int i = 0; i < 3; i++){
 					for(int j = i; j<9; j+=3){
 						if(isServer && buttonList.get(j).getText() == "X"){
-							if(j==i+6)
+							if(j==i+6){
+								System.out.println("anya");
 								return true;
+							}
 							continue;
 						}
 						else if(!isServer && buttonList.get(j).getText() == "O"){
-							if(j==i+6)
+							if(j==i+6){
+								System.out.println("one");
 								return true;
+							}
 							continue;
 						}
+						break;
 					}
 				}
 				
 				//check diagonals
-				if(buttonList.get(0).getText() == buttonList.get(5).getText() && buttonList.get(5).getText() == buttonList.get(9).getText()){
+				if(buttonList.get(0).getText() == buttonList.get(4).getText() && buttonList.get(4).getText() == buttonList.get(9).getText() && buttonList.get(0).getText() != ""){
+					System.out.println("yep");
 					return true;
 				}
-				else if(buttonList.get(3).getText() == buttonList.get(5).getText() && buttonList.get(5).getText() == buttonList.get(6).getText()){
+				else if(buttonList.get(2).getText() == buttonList.get(4).getText() && buttonList.get(4).getText() == buttonList.get(6).getText() && buttonList.get(2).getText() != ""){
+					System.out.println("nein");
 					return true;
 				}
 				
@@ -180,12 +190,12 @@ public class TicTacToe implements ActionListener
 				JMenu fileMenu = new JMenu( "File" );
 				fileMenu.setMnemonic( KeyEvent.VK_F );
 
-				JMenuItem menuItem = new JMenuItem( "New Chat...", KeyEvent.VK_N );
+				JMenuItem menuItem = new JMenuItem( "Start TicTacToe Game...", KeyEvent.VK_N );
 				menuItem.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_N, ActionEvent.ALT_MASK ) );
 				menuItem.addActionListener( listener );
 				fileMenu.add( menuItem );
 
-				menuItem = new JMenuItem( "Join Chat...", KeyEvent.VK_J );
+				menuItem = new JMenuItem( "Join TicTacToe Game...", KeyEvent.VK_J );
 				menuItem.setAccelerator( KeyStroke.getKeyStroke( KeyEvent.VK_J, ActionEvent.ALT_MASK ) );
 				menuItem.addActionListener( listener );
 				fileMenu.add( menuItem );
@@ -203,99 +213,112 @@ public class TicTacToe implements ActionListener
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					if(checkIfSpaceEmpty(Integer.parseInt(e.getActionCommand()))){
-						if(e.getActionCommand().equals("0")){
-							if(isServer){
-								((AbstractButton) e.getSource()).setText("X");
-								sender.sendMessage("0");
+					if(myTurn){
+						myTurn = false;
+						sender.sendMessage("Your turn.");
+						if(checkIfSpaceEmpty(Integer.parseInt(e.getActionCommand()))){
+							if(e.getActionCommand().equals("0")){
+								if(isServer){
+									((AbstractButton) e.getSource()).setText("X");
+									sender.sendMessage("0");
+								}
+								else{
+									((AbstractButton) e.getSource()).setText("O");
+									sender.sendMessage("0");
+								}
+							}
+							else if(e.getActionCommand().equals("1")){
+								if(isServer){
+									((AbstractButton) e.getSource()).setText("X");
+									sender.sendMessage("1");
+								}
+								else{
+									((AbstractButton) e.getSource()).setText("O");
+									sender.sendMessage("1");
+								}
+							}
+							else if(e.getActionCommand().equals("2")){
+								if(isServer){
+									((AbstractButton) e.getSource()).setText("X");
+									sender.sendMessage("2");
+								}
+								else{
+									((AbstractButton) e.getSource()).setText("O");
+									sender.sendMessage("2");
+								}
+							}
+							else if(e.getActionCommand().equals("3")){
+								if(isServer){
+									((AbstractButton) e.getSource()).setText("X");
+									sender.sendMessage("3");
+								}
+								else{
+									((AbstractButton) e.getSource()).setText("O");
+									sender.sendMessage("3");
+								}
+							}
+							else if(e.getActionCommand().equals("4")){
+								if(isServer){
+									((AbstractButton) e.getSource()).setText("X");
+									sender.sendMessage("4");
+								}
+								else{
+									((AbstractButton) e.getSource()).setText("O");
+									sender.sendMessage("4");
+								}
+							}
+							else if(e.getActionCommand().equals("5")){
+								if(isServer){
+									((AbstractButton) e.getSource()).setText("X");
+									sender.sendMessage("5");
+								}
+								else{
+									((AbstractButton) e.getSource()).setText("O");
+									sender.sendMessage("5");
+								}
+							}
+							else if(e.getActionCommand().equals("6")){
+								if(isServer){
+									((AbstractButton) e.getSource()).setText("X");
+									sender.sendMessage("6");
+								}
+								else{
+									((AbstractButton) e.getSource()).setText("O");
+									sender.sendMessage("6");
+								}
+							}
+							else if(e.getActionCommand().equals("7")){
+								if(isServer){
+									((AbstractButton) e.getSource()).setText("X");
+									sender.sendMessage("7");
+								}
+								else{
+									((AbstractButton) e.getSource()).setText("O");
+									sender.sendMessage("7");
+								}
+							}
+							else if(e.getActionCommand().equals("8")){
+								if(isServer){
+									((AbstractButton) e.getSource()).setText("X");
+									sender.sendMessage("8");
+								}
+								else{
+									((AbstractButton) e.getSource()).setText("O");
+									sender.sendMessage("8");
+								}
 							}
 							else{
-								((AbstractButton) e.getSource()).setText("O");
-								sender.sendMessage("0");
+								System.err.print("Unknown Button Error");
 							}
-						}
-						else if(e.getActionCommand().equals("1")){
-							if(isServer){
-								((AbstractButton) e.getSource()).setText("X");
-								sender.sendMessage("1");
+							if(checkForWin()){
+								myTurn = false;
+								int input = JOptionPane.showOptionDialog(null, "You win!", "Congrats!", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+								if(input == JOptionPane.OK_CANCEL_OPTION || input == JOptionPane.OK_OPTION){
+									sender.sendMessage("You lose!");
+									System.exit(1);
+								}
+//								sender.sendMessage("You lose!");
 							}
-							else{
-								((AbstractButton) e.getSource()).setText("O");
-								sender.sendMessage("1");
-							}
-						}
-						else if(e.getActionCommand().equals("2")){
-							if(isServer){
-								((AbstractButton) e.getSource()).setText("X");
-								sender.sendMessage("2");
-							}
-							else{
-								((AbstractButton) e.getSource()).setText("O");
-								sender.sendMessage("2");
-							}
-						}
-						else if(e.getActionCommand().equals("3")){
-							if(isServer){
-								((AbstractButton) e.getSource()).setText("X");
-								sender.sendMessage("3");
-							}
-							else{
-								((AbstractButton) e.getSource()).setText("O");
-								sender.sendMessage("3");
-							}
-						}
-						else if(e.getActionCommand().equals("4")){
-							if(isServer){
-								((AbstractButton) e.getSource()).setText("X");
-								sender.sendMessage("4");
-							}
-							else{
-								((AbstractButton) e.getSource()).setText("O");
-								sender.sendMessage("4");
-							}
-						}
-						else if(e.getActionCommand().equals("5")){
-							if(isServer){
-								((AbstractButton) e.getSource()).setText("X");
-								sender.sendMessage("5");
-							}
-							else{
-								((AbstractButton) e.getSource()).setText("O");
-								sender.sendMessage("5");
-							}
-						}
-						else if(e.getActionCommand().equals("6")){
-							if(isServer){
-								((AbstractButton) e.getSource()).setText("X");
-								sender.sendMessage("6");
-							}
-							else{
-								((AbstractButton) e.getSource()).setText("O");
-								sender.sendMessage("6");
-							}
-						}
-						else if(e.getActionCommand().equals("7")){
-							if(isServer){
-								((AbstractButton) e.getSource()).setText("X");
-								sender.sendMessage("7");
-							}
-							else{
-								((AbstractButton) e.getSource()).setText("O");
-								sender.sendMessage("7");
-							}
-						}
-						else if(e.getActionCommand().equals("8")){
-							if(isServer){
-								((AbstractButton) e.getSource()).setText("X");
-								sender.sendMessage("8");
-							}
-							else{
-								((AbstractButton) e.getSource()).setText("O");
-								sender.sendMessage("8");
-							}
-						}
-						else{
-							System.err.print("Unknown Button Error");
 						}
 					}
 				}
@@ -311,14 +334,14 @@ public class TicTacToe implements ActionListener
 					// Switch statements with Strings is new in JDK 7.
 					switch( ae.getActionCommand() )
 					{
-					case "New Chat..." :
+					case "Start TicTacToe Game..." :
 						//JOptionPane.showMessageDialog( frame, "Start a chat server/client here...", ae.getActionCommand(), JOptionPane.INFORMATION_MESSAGE );
 						server = new TicTacToeServer();
 						sender = server;
 						listener = new Thread( server );
 						listener.start();
 						break;
-					case "Join Chat..." :
+					case "Join TicTacToe Game..." :
 						//JOptionPane.showMessageDialog( frame, "Start a chat server/client here...", ae.getActionCommand(), JOptionPane.INFORMATION_MESSAGE );
 						client = new TicTacToeClient();
 						sender = client;
@@ -440,7 +463,6 @@ public class TicTacToe implements ActionListener
 			 */
 			private class TicTacToeServer implements Runnable, MessageSender
 			{
-				private JTextArea messages;
 				private PrintWriter output;
 
 				public TicTacToeServer()
@@ -486,25 +508,38 @@ public class TicTacToe implements ActionListener
 						do
 						{
 							message = in.readLine();  // Blocks until a message is received.
+							if(message == "You lose!"){
+								break;
+							}
 							System.out.println("This is the message: '" +message+ "'");
-							int value = Integer.parseInt(message);
-							switch(value){
-							case 0: TicTacToe.buttonList.get(0).setText("O"); break;
-							case 1: TicTacToe.buttonList.get(1).setText("O"); break;
-							case 2: TicTacToe.buttonList.get(2).setText("O"); break;
-							case 3: TicTacToe.buttonList.get(3).setText("O"); break;
-							case 4: TicTacToe.buttonList.get(4).setText("O"); break;
-							case 5: TicTacToe.buttonList.get(5).setText("O"); break;
-							case 6: TicTacToe.buttonList.get(6).setText("O"); break;
-							case 7: TicTacToe.buttonList.get(7).setText("O"); break;
-							case 8: TicTacToe.buttonList.get(8).setText("O"); break;
-							
+							if(message.equals("Your turn.")){
+								myTurn = true;
+//								continue;
+							}
+							else if(!myTurn){
+								continue;
+							}
+							boolean tradeTurns = message.equals("Your turn.");
+							if(!tradeTurns){
+								int value = Integer.parseInt(message);
+								switch(value){
+								case 0: TicTacToe.buttonList.get(0).setText("O"); break;
+								case 1: TicTacToe.buttonList.get(1).setText("O"); break;
+								case 2: TicTacToe.buttonList.get(2).setText("O"); break;
+								case 3: TicTacToe.buttonList.get(3).setText("O"); break;
+								case 4: TicTacToe.buttonList.get(4).setText("O"); break;
+								case 5: TicTacToe.buttonList.get(5).setText("O"); break;
+								case 6: TicTacToe.buttonList.get(6).setText("O"); break;
+								case 7: TicTacToe.buttonList.get(7).setText("O"); break;
+								case 8: TicTacToe.buttonList.get(8).setText("O"); break;
+								
+								}
 							}
 						}
-						while( !message.equalsIgnoreCase( "GoodBye" ) );
+						while( !message.equalsIgnoreCase( "You lose!" ) );
 
 						// Send the "GoodBye" message back to stop the other thread.
-						out.println( "GoodBye" );
+						out.println( "You lose!" );
 
 						// Disable the message JTextField so it looks like things are done.
 						messageField.setEnabled( false );
@@ -576,26 +611,39 @@ public class TicTacToe implements ActionListener
 						do
 						{
 							message = in.readLine();
+							if(message == "You lose!"){
+								break;
+							}
 							System.out.println("Client message: '" +message+ "'");
-							int value = Integer.parseInt(message);
-							switch(value){
-							case 0: TicTacToe.buttonList.get(0).setText("X"); break;
-							case 1: TicTacToe.buttonList.get(1).setText("X"); break;
-							case 2: TicTacToe.buttonList.get(2).setText("X"); break;
-							case 3: TicTacToe.buttonList.get(3).setText("X"); break;
-							case 4: TicTacToe.buttonList.get(4).setText("X"); break;
-							case 5: TicTacToe.buttonList.get(5).setText("X"); break;
-							case 6: TicTacToe.buttonList.get(6).setText("X"); break;
-							case 7: TicTacToe.buttonList.get(7).setText("X"); break;
-							case 8: TicTacToe.buttonList.get(8).setText("X"); break;
-							
+							boolean tradeTurns = message.equals("Your turn.");
+							if(tradeTurns){
+								myTurn = true;
+//								continue;
+							}
+							else if(!myTurn){
+								continue;
+							}
+							if(!tradeTurns){
+								int value = Integer.parseInt(message);
+								switch(value){
+								case 0: TicTacToe.buttonList.get(0).setText("X"); break;
+								case 1: TicTacToe.buttonList.get(1).setText("X"); break;
+								case 2: TicTacToe.buttonList.get(2).setText("X"); break;
+								case 3: TicTacToe.buttonList.get(3).setText("X"); break;
+								case 4: TicTacToe.buttonList.get(4).setText("X"); break;
+								case 5: TicTacToe.buttonList.get(5).setText("X"); break;
+								case 6: TicTacToe.buttonList.get(6).setText("X"); break;
+								case 7: TicTacToe.buttonList.get(7).setText("X"); break;
+								case 8: TicTacToe.buttonList.get(8).setText("X"); break;
+								
+								}
 							}
 	
 						}
-						while( !message.equalsIgnoreCase( "GoodBye" ) );
-
+						while( !message.equalsIgnoreCase( "You lose!" ) );
+						
 						// Send the "GoodBye" message back to stop the other thread.
-						out.println( "GoodBye" );
+						out.println( "You lose!" );
 
 						// Disable the message JTextField so it looks like things are done.
 						messageField.setEnabled( false );
