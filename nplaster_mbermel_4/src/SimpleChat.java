@@ -439,7 +439,8 @@ public class SimpleChat implements ActionListener
 						e.printStackTrace();
 						System.exit( 1 );
 					}
-
+					
+					
 					try( ServerSocket serverSocket = new ServerSocket( PORT );
 							Socket clientSocket = serverSocket.accept();  // Blocks until a connection is made.
 							BufferedReader in = new BufferedReader( new InputStreamReader( clientSocket.getInputStream() ) );
