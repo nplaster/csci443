@@ -69,7 +69,7 @@ public class TicTacToe implements ActionListener
 				// Add a random 3-digit number for debugging when both server and client are on the same machine...
 				this.myUsername = System.getenv( "USERNAME" ) + ( (int)( Math.random() * 900 + 100 ) );
 
-				this.frame = new JFrame( "Simple Chat: " + this.myUsername );
+				this.frame = new JFrame( "TicTacToe XTREM3: " + this.myUsername );
 				this.frame.setLayout( new BorderLayout() );
 				this.frame.setLocation( 42, 42 );
 				this.frame.setForeground( Color.WHITE );
@@ -132,14 +132,12 @@ public class TicTacToe implements ActionListener
 					for(int j = i; j<i+3; j++){
 						if(isServer && buttonList.get(j).getText() == "X"){
 							if(j==i+2){
-								System.out.println("elizabeth");
 								return true;
 							}
 							continue;
 						}						
 						else if(!isServer && buttonList.get(j).getText() == "O"){
 							if(j==i+2){
-								System.out.println("two");
 								return true;
 							}
 							continue;
@@ -153,14 +151,12 @@ public class TicTacToe implements ActionListener
 					for(int j = i; j<9; j+=3){
 						if(isServer && buttonList.get(j).getText() == "X"){
 							if(j==i+6){
-								System.out.println("anya");
 								return true;
 							}
 							continue;
 						}
 						else if(!isServer && buttonList.get(j).getText() == "O"){
 							if(j==i+6){
-								System.out.println("one");
 								return true;
 							}
 							continue;
@@ -170,12 +166,10 @@ public class TicTacToe implements ActionListener
 				}
 				
 				//check diagonals
-				if(buttonList.get(0).getText() == buttonList.get(4).getText() && buttonList.get(4).getText() == buttonList.get(9).getText() && buttonList.get(0).getText() != ""){
-					System.out.println("yep");
+				if(buttonList.get(0).getText() == buttonList.get(4).getText() && buttonList.get(4).getText() == buttonList.get(8).getText() && buttonList.get(0).getText() != ""){
 					return true;
 				}
 				else if(buttonList.get(2).getText() == buttonList.get(4).getText() && buttonList.get(4).getText() == buttonList.get(6).getText() && buttonList.get(2).getText() != ""){
-					System.out.println("nein");
 					return true;
 				}
 				
@@ -213,7 +207,7 @@ public class TicTacToe implements ActionListener
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					if(myTurn){
+					if(myTurn && sender != null){
 						myTurn = false;
 						sender.sendMessage("Your turn.");
 						if(checkIfSpaceEmpty(Integer.parseInt(e.getActionCommand()))){
@@ -313,19 +307,13 @@ public class TicTacToe implements ActionListener
 							if(checkForWin()){
 								myTurn = false;
 								sender.sendMessage("You lose!");
-								int input = JOptionPane.showOptionDialog(null, "You win!", "Congrats!", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
-								System.out.println("Send you lose");
-								
+								JOptionPane.showOptionDialog(null, "You win!", "Congrats!", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
 								System.exit(1);
-								//System.exit(1);
-//								if(input == JOptionPane.OK_CANCEL_OPTION || input == JOptionPane.OK_OPTION){
-//									System.out.println("Send you lose");
-//									sender.sendMessage("You lose!");
-//									System.exit(1);
-//								}
-//								sender.sendMessage("You lose!");
 							}
 						}
+					}
+					else{
+						JOptionPane.showOptionDialog(null, "Please start a new game or join a game first!\nFile >> Start/Join TicTacToe Game ", "Information", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
 					}
 				}
 			}
@@ -341,29 +329,32 @@ public class TicTacToe implements ActionListener
 					switch( ae.getActionCommand() )
 					{
 					case "Start TicTacToe Game..." :
-						//JOptionPane.showMessageDialog( frame, "Start a chat server/client here...", ae.getActionCommand(), JOptionPane.INFORMATION_MESSAGE );
 						server = new TicTacToeServer();
 						sender = server;
 						listener = new Thread( server );
 						listener.start();
 						break;
 					case "Join TicTacToe Game..." :
-						//JOptionPane.showMessageDialog( frame, "Start a chat server/client here...", ae.getActionCommand(), JOptionPane.INFORMATION_MESSAGE );
 						client = new TicTacToeClient();
 						sender = client;
 						listener = new Thread( client );
 						listener.start();
 						break;
 					case "Exit" :
-						// Send the "GoodBye" message to stop the other thread.
-						if( sender != null )  sender.sendMessage( "GoodBye" );
-						// Wait for the listener thread (which may be either a server or client) to stop,
-						// which happens when the "GoodBye" message is sent and returned.
-						frame.setCursor( Cursor.getPredefinedCursor( Cursor.WAIT_CURSOR ) );
-						while( listener.isAlive() )
-						{
-							try { Thread.sleep( 200 ); } catch( InterruptedException e ) { /* Ignore interrupt. */ }
-						}
+//						if(listener == null){
+//							System.out.println("nads");
+//							System.exit(0);
+//						}
+//						// Wait for the listener thread (which may be either a server or client) to stop,
+//						// which happens when the "GoodBye" message is sent and returned.
+//						frame.setCursor( Cursor.getPredefinedCursor( Cursor.WAIT_CURSOR ) );
+//						listener.
+//						while( listener.isAlive() )
+//						{
+//							System.out.println("fuck");
+//							try { Thread.sleep( 200 ); } catch( InterruptedException e ) { /* Ignore interrupt. */ }
+//						}
+//						System.out.println("after");
 						System.exit( 0 );
 						break;
 					}
@@ -478,7 +469,6 @@ public class TicTacToe implements ActionListener
 
 				public void sendMessage( String message )
 				{
-					System.out.println("The server is sending: '" +message+ "'");
 					this.output.println( message );
 				}
 
@@ -620,22 +610,15 @@ public class TicTacToe implements ActionListener
 						String message;
 						do
 						{
-							message = in.readLine();
-							if(message == null || message.equals("You lose!")){
-								break;
-							}
-							System.out.println("Client message: '" +message+ "'");
-							boolean tradeTurns = false;
-							if(message != null){
-								tradeTurns = message.equals("Your turn.");
-							}
-							if(tradeTurns){
+							message = in.readLine();  // Blocks until a message is received.
+							
+							if(message.equals("Your turn.")){
 								myTurn = true;
-//								continue;
 							}
 							else if(!myTurn){
 								continue;
 							}
+							boolean tradeTurns = message.equals("Your turn.") || message.equals("You lose!");
 							if(!tradeTurns){
 								int value = Integer.parseInt(message);
 								switch(value){
@@ -651,15 +634,14 @@ public class TicTacToe implements ActionListener
 								
 								}
 							}
-	
 						}
 						while( !message.equalsIgnoreCase( "You lose!" ) );
 						
-						// Send the "GoodBye" message back to stop the other thread.
-						out.println( "You lose! Client" );
+						JOptionPane.showMessageDialog( null, "Sorry, you lose!");
 
 						// Disable the message JTextField so it looks like things are done.
 						messageField.setEnabled( false );
+						System.exit(1);
 							}
 					catch( UnknownHostException e )
 					{
@@ -683,6 +665,9 @@ public class TicTacToe implements ActionListener
 				{
 					// Send the "GoodBye" message to stop the other thread.
 					if( sender != null )  sender.sendMessage( "GoodBye" );
+					if(listener == null){
+						System.exit(0);
+					}
 					// Wait for the listener thread (which may be either a server or client) to stop,
 					// which happens when the "GoodBye" message is sent and returned.
 					frame.setCursor( Cursor.getPredefinedCursor( Cursor.WAIT_CURSOR ) );
