@@ -312,11 +312,17 @@ public class TicTacToe implements ActionListener
 							}
 							if(checkForWin()){
 								myTurn = false;
+								sender.sendMessage("You lose!");
 								int input = JOptionPane.showOptionDialog(null, "You win!", "Congrats!", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
-								if(input == JOptionPane.OK_CANCEL_OPTION || input == JOptionPane.OK_OPTION){
-									sender.sendMessage("You lose!");
-									System.exit(1);
-								}
+								System.out.println("Send you lose");
+								
+								System.exit(1);
+								//System.exit(1);
+//								if(input == JOptionPane.OK_CANCEL_OPTION || input == JOptionPane.OK_OPTION){
+//									System.out.println("Send you lose");
+//									sender.sendMessage("You lose!");
+//									System.exit(1);
+//								}
 //								sender.sendMessage("You lose!");
 							}
 						}
@@ -508,10 +514,12 @@ public class TicTacToe implements ActionListener
 						do
 						{
 							message = in.readLine();  // Blocks until a message is received.
-							if(message == "You lose!"){
-								break;
-							}
 							System.out.println("This is the message: '" +message+ "'");
+//							if(message.equals("You lose!")){
+//								System.out.println("You lose!");
+//								continue;
+//							}
+							
 							if(message.equals("Your turn.")){
 								myTurn = true;
 //								continue;
@@ -519,7 +527,8 @@ public class TicTacToe implements ActionListener
 							else if(!myTurn){
 								continue;
 							}
-							boolean tradeTurns = message.equals("Your turn.");
+							boolean tradeTurns = message.equals("Your turn.") || message.equals("You lose!");
+							System.out.println("Your turn: " +String.valueOf(message.equals("Your turn.")) + "Lose: " + String.valueOf(tradeTurns) + "Trade turns: " + String.valueOf(tradeTurns));
 							if(!tradeTurns){
 								int value = Integer.parseInt(message);
 								switch(value){
@@ -539,10 +548,11 @@ public class TicTacToe implements ActionListener
 						while( !message.equalsIgnoreCase( "You lose!" ) );
 
 						// Send the "GoodBye" message back to stop the other thread.
-						out.println( "You lose!" );
+						JOptionPane.showMessageDialog( null, "Sorry, you lose!");
 
 						// Disable the message JTextField so it looks like things are done.
 						messageField.setEnabled( false );
+						System.exit(1);
 							}
 					catch( IOException e )
 					{
@@ -611,11 +621,14 @@ public class TicTacToe implements ActionListener
 						do
 						{
 							message = in.readLine();
-							if(message == "You lose!"){
+							if(message == null || message.equals("You lose!")){
 								break;
 							}
 							System.out.println("Client message: '" +message+ "'");
-							boolean tradeTurns = message.equals("Your turn.");
+							boolean tradeTurns = false;
+							if(message != null){
+								tradeTurns = message.equals("Your turn.");
+							}
 							if(tradeTurns){
 								myTurn = true;
 //								continue;
@@ -643,7 +656,7 @@ public class TicTacToe implements ActionListener
 						while( !message.equalsIgnoreCase( "You lose!" ) );
 						
 						// Send the "GoodBye" message back to stop the other thread.
-						out.println( "You lose!" );
+						out.println( "You lose! Client" );
 
 						// Disable the message JTextField so it looks like things are done.
 						messageField.setEnabled( false );
